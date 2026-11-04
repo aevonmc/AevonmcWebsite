@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Welcome to AevonMC",
+    "slug": "welcome-to-aevonmc",
+    "category": "rules",
+    "description": "Start here to learn about our community expectations.",
+    "published": true,
+    "content": "## Respect everyone\n- Treat other players kindly.\n- Avoid harassment, hate speech, and bullying.\n\n## Play fairly\n- Do not use cheats, exploits, or unauthorized modifications.\n- Follow staff instructions.\n\n> These are sample rules. Replace them with your official server policies."
+  },
+  {
+    "title": "Getting Started",
+    "slug": "getting-started",
+    "category": "guides",
+    "description": "A beginner-friendly introduction to the server.",
+    "published": true,
+    "content": "## Welcome!\nWe are glad you are here.\n\n## First steps\n1. Read the server rules.\n2. Explore the spawn area.\n3. Ask staff if you need help.\n\n> This is a sample guide. Edit it in posts.json."
+  }
+]
