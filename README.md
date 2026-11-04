@@ -37,3 +37,12 @@ Fields:
 - Links in posts only render for explicit `https://` or `http://` URLs, and open with `noopener noreferrer`.
 - Reduced-motion system preference disables cloud animations.
 - Never put admin credentials or GitHub personal access tokens in this repository.
+
+
+## Website admin editor (GitHub-only)
+
+Visit `admin.html` from your published website. Create a GitHub fine-grained personal access token scoped **only** to this repository with **Contents: Read and write** permission. Enter `owner/repository`, the branch (`main`), and the token in the admin editor. The editor loads `posts.json` and commits additions, edits and deletions directly via GitHub's API. GitHub Pages updates after the commit is deployed.
+
+**Security:** This is NOT a custom username/password login. GitHub Pages cannot safely validate a password by itself. The access token is held in page memory only (not localStorage), cleared on disconnect/refresh, and sent only to `api.github.com` via HTTPS. Anyone who possesses a token with write access can edit content; keep it private, use a short expiration, and revoke it if exposed. The editor page is public but only authorized GitHub credentials can save changes. Public `posts.json` is readable, including unpublished drafts. Do not put secrets in posts.
+
+**Theme:** `assets/realistic-clouds.webp` is a locally bundled, procedural atmospheric cloud background. Moving cloud overlays and falling cloud particles remain enabled. The AevonMC wordmark uses rounded bubble-style Fredoka lettering.
