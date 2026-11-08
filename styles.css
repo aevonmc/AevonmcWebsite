@@ -25,3 +25,14 @@ body{background:#77c7f2 url("assets/realistic-clouds.webp") center center / cove
 .connect-icon{font-size:27px;line-height:1}.connect-label{font-family:Fredoka,system-ui,sans-serif;font-weight:700;font-size:13px;letter-spacing:1.1px}.connect-card strong{font-family:Fredoka,system-ui,sans-serif;font-size:clamp(15px,1.65vw,21px);overflow-wrap:anywhere}.copy-server,.join-discord{font-family:Nunito,system-ui,sans-serif;font-weight:900;font-size:14px;background:#317bdb;color:#fff;border:0;border-radius:999px;padding:9px 20px;cursor:pointer}.discord-card{transition:transform .2s,box-shadow .2s}.discord-card:hover{transform:translateY(-4px);box-shadow:0 11px 0 rgba(66,142,213,.2),0 18px 32px rgba(27,85,145,.16)}.discord-card .join-discord{background:#5865f2}.copy-server:focus-visible,.discord-card:focus-visible{outline:3px solid #183f89;outline-offset:4px}
 @media(max-width:850px){.hero-connect{grid-template-columns:1fr 1fr;max-width:640px}.hero-connect h1{grid-column:1/-1;grid-row:1}.connect-card{min-height:160px}.server-card{grid-column:1;grid-row:2}.discord-card{grid-column:2;grid-row:2}}
 @media(max-width:480px){.hero-connect{gap:10px}.connect-card{padding:14px 8px;min-height:158px}.connect-card strong{font-size:14px}.connect-label{font-size:11px}.copy-server,.join-discord{font-size:12px;padding:8px 12px}}
+
+/* Minimal homepage connectivity labels: no surrounding cards or panels. */
+.hero-connect .connect-card{background:none;border:0;box-shadow:none;border-radius:0;padding:10px 4px;min-height:140px;color:#20578d}
+.hero-connect .discord-card:hover{transform:none;box-shadow:none}
+.hero-connect .connect-label{font-size:14px}
+.hero-connect .live-count{font-family:Fredoka,system-ui,sans-serif;font-size:clamp(14px,1.5vw,19px);font-weight:700;color:#215e98;min-height:1.5em}
+.hero-connect .copy-server{background:transparent;color:#215e98;border:0;padding:3px 8px;text-decoration:underline;text-underline-offset:3px;box-shadow:none}
+.hero-connect .join-discord{background:transparent;color:#4a50b7;border:0;padding:3px 8px;text-decoration:underline;text-underline-offset:3px;box-shadow:none}
+.hero-connect .copy-server:hover,.hero-connect .join-discord:hover{opacity:.75}
+.hero-connect .join-discord:focus-visible,.hero-connect .copy-server:focus-visible{outline:2px solid #215e98;outline-offset:3px;border-radius:4px}
+@media(max-width:480px){.hero-connect .connect-card{min-height:130px;padding:8px 2px}.hero-connect .live-count{font-size:13px}}
