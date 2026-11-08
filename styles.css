@@ -62,3 +62,10 @@ body{background:#77c7f2 url("assets/realistic-clouds.webp") center center / cove
 /* Server and Discord headings + live status: regular Arial, preserving green and tight spacing. */
 .hero-connect .connect-label,
 .hero-connect .live-count {font-family:Arial,Helvetica,sans-serif!important;font-weight:400!important;font-style:normal!important;letter-spacing:normal!important;text-shadow:none!important;}
+
+/* Requested typography: smaller regular labels/status; only middle line bold. */
+.hero-connect .connect-label,
+.hero-connect .live-count {font-family:Arial,Helvetica,sans-serif!important;font-size:12px!important;font-weight:400!important;line-height:1.05!important;}
+.hero-connect .connect-card > strong {font-family:Arial,Helvetica,sans-serif!important;font-size:15px!important;font-weight:700!important;line-height:1.05!important;}
+.hero-connect .connect-card {gap:0!important;row-gap:0!important;}
+@media(max-width:480px){.hero-connect .connect-label,.hero-connect .live-count{font-size:11px!important}.hero-connect .connect-card > strong{font-size:14px!important}}
