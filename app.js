@@ -13,7 +13,41 @@ const main=document.getElementById('main');let posts=[];const esc=s=>String(s??'
  v=v.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)"'<>]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
  return v;
 }
+const RICH_MARKER='<!--aevon-rich-v1-->';
+function safeRichHtml(source){
+ const doc=new DOMParser().parseFromString('<div id="safe-root">'+source+'</div>','text/html');
+ const root=doc.getElementById('safe-root');
+ const tags=new Set(['P','DIV','BR','STRONG','B','EM','I','U','S','H2','H3','H4','UL','OL','LI','BLOCKQUOTE','SPAN','A','IMG','CODE']);
+ const fontNames=new Set(Object.keys(postFonts));
+ function clean(node){
+  if(node.nodeType===Node.TEXT_NODE)return document.createTextNode(node.textContent);
+  if(node.nodeType!==Node.ELEMENT_NODE)return document.createDocumentFragment();
+  if(!tags.has(node.tagName)){const fragment=document.createDocumentFragment();for(const child of Array.from(node.childNodes))fragment.append(clean(child));return fragment}
+  const el=document.createElement(node.tagName.toLowerCase());
+  if(node.tagName==='A'){
+   const url=node.getAttribute('href')||'';
+   if(/^https?:\/\//i.test(url)){el.setAttribute('href',url);el.setAttribute('target','_blank');el.setAttribute('rel','noopener noreferrer')}
+  }
+  if(node.tagName==='IMG'){
+   const src=node.getAttribute('src')||'';
+   if(!/^assets\/uploads\/[a-zA-Z0-9._-]+\.(png|jpe?g|gif|webp)$/i.test(src))return document.createDocumentFragment();
+   el.setAttribute('src',src);el.setAttribute('alt',(node.getAttribute('alt')||'').slice(0,120));el.setAttribute('loading','lazy');
+  }
+  const style=node.style;
+  if(style){
+   if(/^#[0-9a-fA-F]{3,8}$/.test(style.color)||/^rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)$/.test(style.color))el.style.color=style.color;
+   const size=parseInt(style.fontSize,10);if(/^\d+px$/.test(style.fontSize)&&size>=10&&size<=72)el.style.fontSize=size+'px';
+   const family=style.fontFamily.replace(/^['"]|['"]$/g,'');if(fontNames.has(family))el.style.fontFamily=postFonts[family];
+   if(style.fontWeight==='bold'||Number(style.fontWeight)>=600)el.style.fontWeight='bold';
+   if(style.fontStyle==='italic')el.style.fontStyle='italic';
+   if(style.textDecorationLine.includes('underline'))el.style.textDecoration='underline';
+  }
+  for(const child of Array.from(node.childNodes))el.append(clean(child));return el;
+ }
+ const output=document.createElement('div');for(const child of Array.from(root.childNodes))output.append(clean(child));return output.innerHTML;
+}
 function markdown(s){
+ if(String(s).startsWith(RICH_MARKER))return safeRichHtml(String(s).slice(RICH_MARKER.length));
  let lines=String(s).split(/\r?\n/),html='',list='';
  function close(){if(list){html+='</'+list+'>';list=''}}
  for(const raw of lines){let l=raw.trim();if(!l){close();continue}let m;
