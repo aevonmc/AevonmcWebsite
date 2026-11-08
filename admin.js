@@ -4,7 +4,7 @@ const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const OWNER_LOGIN='aevonmc', OWNER_ID=349076440, REPO='aevonmc/AevonmcWebsite', BRANCH='main';
 let auth=null,posts=[],sha='',editing=-1,busy=false;
 const SERVER_NAMES={lifesteal:'LifeSteaL','survival-economy':'Survival Economy'};
-const postServer=p=>SERVER_NAMES[p.server]?p.server:'survival-economy'; // legacy posts only
+const postServer=p=>SERVER_NAMES[p.server]?p.server:SERVER_NAMES[p.serverCategory]?p.serverCategory:'survival-economy'; // legacy posts only
 const postKey=p=>[p.category,postServer(p),p.slug].join('::');
 const utf8ToBase64=s=>{const bytes=new TextEncoder().encode(s);let binary='';for(const byte of bytes)binary+=String.fromCharCode(byte);return btoa(binary)};
 const base64ToUtf8=s=>{const binary=atob(s.replace(/\s/g,''));return new TextDecoder().decode(Uint8Array.from(binary,c=>c.charCodeAt(0)))};
@@ -48,10 +48,11 @@ async function applyMutation(change,message){
   // Verify that the committed file actually contains the requested mutation.
   const check=await latestPosts();
   if(check.remoteSha!==data.content.sha)throw Error('Another update occurred immediately after saving. Refresh and verify.');
+  if(JSON.stringify(check.current)!==JSON.stringify(current))throw Error('GitHub returned content that does not match the requested changes.');
   posts=check.current;sha=check.remoteSha;render();$('editor').hidden=true;
   // Notify public pages already open in another tab of this browser.
   try{localStorage.setItem('aevonmc-public-posts-updated',JSON.stringify({posts,at:Date.now()}))}catch{}
-  status('Changes applied on GitHub. The public site updates after GitHub Pages deploys (usually within a few minutes).','ok');
+  status('Verified on GitHub main/posts.json. Public pages read the repository directly; refresh the relevant server Rules or Guides page.','ok');
   return true;
  }catch(err){status('Changes NOT applied: '+errorMessage(err)+'. Please retry or refresh.','error');return false}
  finally{busy=false;$('save').disabled=false;document.querySelectorAll('[data-delete]').forEach(b=>b.disabled=false)}
@@ -81,7 +82,7 @@ $('post-form').addEventListener('submit',async e=>{
   if(current.some((p,i)=>i!==index&&postKey(p)===postKey(post)))throw Error('That URL slug already exists in this server and content type.');
   if(index<0)current.push(post);else current[index]={...current[index],...post};
  },(original?'Apply changes to ':'Publish ')+SERVER_NAMES[post.server]+' / '+post.category+' post: '+post.title);
- if(ok){const url=new URL('index.html#/'+post.category+'/'+post.server+'/'+encodeURIComponent(post.slug),location.href).href;status('Changes saved and verified on GitHub. Public page (after deployment): '+url,'ok')}
+ if(ok){const url=new URL('index.html#/'+post.category+'/'+post.server+'/'+encodeURIComponent(post.slug),location.href).href;status('Saved and verified on GitHub. Open your post: '+url,'ok')}
 });
 // Repository and owner are deliberately fixed to the verified GitHub account.
 

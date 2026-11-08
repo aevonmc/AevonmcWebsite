@@ -21,3 +21,5 @@
 .rich-content img,.rich-content figure img {display:block;max-width:100% !important;width:auto !important;height:auto !important;max-height:70vh;object-fit:contain;object-position:left center;box-sizing:border-box;}
 .rich-content figure,.rich-content p {max-width:100%;min-width:0;}
 @media(max-width:650px){.rich-content img,.rich-content figure img{max-height:55vh;}}
+
+.overview-field{border:1px solid #badcf3;border-radius:12px;margin:14px 0;padding:15px}.overview-field label{display:block;margin:8px 0}.overview-field input,.overview-field textarea{width:100%;box-sizing:border-box}

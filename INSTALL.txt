@@ -1,12 +1,1 @@
-AevonMC server-specific publishing fix
-
-Upload/replace these files in the ROOT of your GitHub Pages repository:
-admin.html, admin.js, index.html, app.js, styles.css
-
-Do not replace posts.json: your existing published content must be preserved.
-
-Admin: choose Minecraft server (LifeSteaL / Survival Economy) and content type (Rules / Guides). Add, edit and delete are scoped to that combination.
-
-Legacy posts without a server field are displayed under Survival Economy until you edit them and explicitly choose a server.
-
-Changes appear publicly after GitHub Pages deploys. Hard refresh your browser to clear old cached scripts.
+Upload all files and the assets folder to the root of GitHub repository aevonmc/AevonmcWebsite on main. Keep any newer posts.json and assets/uploads images already in your repository. New overview.json powers the three editable homepage cards; edit them in Admin after connecting your GitHub token. LifeSteaL public content is hidden as Coming Soon, but existing posts remain in posts.json. Refresh after GitHub Pages deploys.

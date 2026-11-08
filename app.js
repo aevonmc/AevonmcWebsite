@@ -84,39 +84,64 @@ function route(){
 
  document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===(category||'home')));
  document.title='AevonMC • Rules & Guides';
- if(!bits.length){main.innerHTML=`<section class="hero"><div class="eyebrow">Welcome to the skies</div><div class="hero-connect"><div class="connect-card server-card"><span class="live-count" id="minecraft-online" aria-live="polite">Checking players…</span><strong>aevonsmp.online</strong><button class="copy-server" type="button" data-copy-ip="aevonsmp.online" aria-label="Copy Minecraft server IP">Copy IP?</button></div><h1>Aevon<span>MC</span></h1><div class="connect-card discord-card"><span class="live-count" id="discord-online" aria-live="polite">Checking members…</span><strong>Discord Server</strong><a class="join-discord" href="https://discord.gg/Ad7JVWw5Jp" target="_blank" rel="noopener noreferrer">Click to Join?</a></div></div><p>Explore our server rules and helpful guides. Your next adventure starts here, above the clouds!</p></section><section class="home-grid">${Object.entries(categories).map(([id,c])=>`<a class="category-card" href="#/${id}"><span class="category-icon">${c.icon}</span><div><h2>${c.name}</h2><p>${c.desc}</p></div><span class="arrow">➜</span></a>`).join('')}</section>`;refreshLiveCounts();return}
+ if(!bits.length){main.innerHTML=`<section class="hero redesigned-hero"><div class="hero-connect"><div class="connect-card server-card"><span class="live-count" id="minecraft-online">Checking players…</span><strong>aevonsmp.online</strong><button class="copy-server" type="button" data-copy-ip="aevonsmp.online">Copy IP</button></div><h1 class="bubble-brand"><span>Aevon</span><span>SMP</span></h1><div class="connect-card discord-card"><span class="live-count" id="discord-online">Checking members…</span><strong>Discord Server</strong><a class="join-discord" href="https://discord.gg/Ad7JVWw5Jp" target="_blank" rel="noopener noreferrer">Join Discord</a></div></div><div class="hero-modes"><a class="mode-button" href="#/rules/survival-economy">Economy SMP</a><span class="mode-button mode-disabled" aria-disabled="true">LifeSteaL SMP · Coming Soon</span></div></section><section class="overview"><h2>Overview</h2><div class="overview-grid" id="overview-grid"></div></section>`;renderOverview();refreshLiveCounts();return}
  if(!categories[category]){notFound();return}
  const c=categories[category];
- if(bits.length===1){main.innerHTML=`<section class="page-heading"><div class="eyebrow">Choose your server</div><h1>${c.icon} ${c.name}</h1><p>Select a server to explore its ${c.name.toLowerCase()}.</p></section><section class="server-choices">${Object.entries(serverCategories).map(([id,v])=>`<a class="server-choice ${v.theme}" href="#/${category}/${id}">${serverArt(id)}<div class="server-choice-content"><span class="server-choice-icon">${v.icon}</span><h2>${v.name}</h2><p>${v.tagline}</p><span class="server-choice-action">View ${c.name} →</span></div></a>`).join('')}</section>`;return}
+ if(bits.length===1){main.innerHTML=`<section class="page-heading"><h1>${c.name}</h1><p>Select a server</p></section><section class="server-choices"><a class="server-choice economy" href="#/${category}/survival-economy"><div class="server-choice-content"><h2>Economy SMP</h2><span class="server-choice-action">View ${c.name}</span></div></a><div class="server-choice lifesteal coming"><div class="server-choice-content"><h2>LifeSteaL SMP</h2><p>Coming Soon</p></div></div></section>`;return}
  const server=bits[1],v=serverCategories[server];if(!v){notFound();return}
- if(bits.length===2){main.innerHTML=`<section class="server-banner ${v.theme}">${serverArt(server)}<div class="server-banner-content"><div class="eyebrow">${c.name} • AevonMC</div><div class="server-symbol">${v.icon}</div><h1>${v.name}</h1><p>${v.tagline}</p><a class="server-back" href="#/${category}">← Choose another server</a></div></section><div class="toolbar"><input class="search" id="search" placeholder="Search ${v.name} ${c.name.toLowerCase()}..." aria-label="Search posts"><span class="count" id="count"></span></div><section class="posts" id="posts"></section>`;const input=document.getElementById('search');input.addEventListener('input',()=>renderCards(category,server,input.value));renderCards(category,server,'');return}
+ if(server==='lifesteal'){main.innerHTML='<section class="coming-soon-page"><h1>LifeSteaL SMP</h1><p>Coming Soon</p></section>';return}
+ if(bits.length===2){main.innerHTML=`<section class="simple-heading"><h1>Economy SMP · ${c.name}</h1></section><div class="toolbar"><input class="search" id="search" placeholder="Search ${c.name.toLowerCase()}..." aria-label="Search posts"><span class="count" id="count"></span></div><section class="posts" id="posts"></section>`;const input=document.getElementById('search');input.addEventListener('input',()=>renderCards(category,server,input.value));renderCards(category,server,'');return}
  if(bits.length!==3){notFound();return}
+ if(server==='lifesteal'){main.innerHTML='<section class="coming-soon-page"><h1>LifeSteaL SMP</h1><p>Coming Soon</p></section>';return}
  const post=posts.find(p=>p.category===category&&postServer(p)===server&&p.slug===bits[2]&&p.published===true);
  if(!post){notFound();return}
- main.innerHTML=`<article class="article"><a class="back" href="#/${category}/${server}">← Back to ${v.name} ${c.name}</a><div class="post-server-label ${v.theme}">${v.icon} ${v.name} • ${c.name}</div><h1>${esc(post.title)}</h1><p class="summary">${esc(post.description||'')}</p><hr><div class="content">${markdown(post.content||'')}</div></article>`;
+ main.innerHTML=`<article class="article"><a class="back" href="#/${category}/${server}">← Back to ${v.name} ${c.name}</a><h1>${esc(post.title)}</h1><p class="summary">${esc(post.description||'')}</p><hr><div class="content">${markdown(post.content||'')}</div></article>`;
  document.title=post.title+' • '+v.name+' • AevonMC';
 }
 function renderCards(cat,server,query){
  const list=document.getElementById('posts'),count=document.getElementById('count');if(!list||!count)return;
  const filtered=posts.filter(p=>p.published===true&&p.category===cat&&postServer(p)===server&&[p.title,p.description,p.content].join(' ').toLowerCase().includes(query.toLowerCase()));
  count.textContent=filtered.length+' post'+(filtered.length===1?'':'s');
- list.innerHTML=filtered.length?filtered.map(p=>`<a class="post-card" href="#/${cat}/${server}/${encodeURIComponent(p.slug)}"><span class="icon">${categories[cat].icon}</span><h2>${esc(p.title)}</h2><p>${esc(p.description||'')}</p><span class="tag">${serverCategories[server].name}</span><span class="read">Read article →</span></a>`).join(''):'<div class="empty">☁ No posts in this server category yet.</div>';
+ list.innerHTML=filtered.length?filtered.map(p=>`<a class="post-card" href="#/${cat}/${server}/${encodeURIComponent(p.slug)}"><h2>${esc(p.title)}</h2><p>${esc(p.description||'')}</p><span class="read">Read article →</span></a>`).join(''):'<div class="empty">No posts yet.</div>';
 }
-function notFound(){main.innerHTML='<div class="empty" style="margin-top:100px"><h2>☁ Lost in the clouds?</h2><p>This page could not be found.</p><a class="button" href="#/">Return home</a></div>'}function particles(){let root=document.getElementById('particles');for(let i=0;i<23;i++){let e=document.createElement('span');e.className='particle';e.textContent=i%4===0?'✦':'☁';e.style.left=(i*47.13%100)+'%';e.style.top='-15%';e.style.fontSize=(9+i%5*4)+'px';e.style.animationDuration=(15+i%9*3)+'s';e.style.animationDelay=(-i*2.9)+'s';root.append(e)}}// Read committed content directly from GitHub, bypassing GitHub Pages deployment lag.
+function notFound(){main.innerHTML='<div class="empty" style="margin-top:100px"><h2>☁ Lost in the clouds?</h2><p>This page could not be found.</p><a class="button" href="#/">Return home</a></div>'}function particles(){const root=document.getElementById('particles');if(!root)return;for(let i=0;i<5;i++){const el=document.createElement('span');el.className='particle floating-cloud';el.textContent='☁';el.style.top=(12+i*17)+'%';el.style.left='-20%';el.style.fontSize=(24+i*11)+'px';el.style.animationDuration=(35+i*9)+'s';el.style.animationDelay=(-i*14)+'s';root.append(el)}}
+const DEFAULT_OVERVIEW=[{title:'Economy SMP',description:'Build, trade, and grow in a thriving survival economy.',image:''},{title:'Community',description:'Meet friends, team up, and build memories together.',image:''},{title:'LifeSteaL SMP',description:'A new PvP adventure is on the way. Coming Soon.',image:''}];
+let overview=DEFAULT_OVERVIEW;
+function safeImage(src){if(typeof src!=='string')return '';if(/^assets\/uploads\/[a-zA-Z0-9._-]+\.(png|jpe?g|webp|gif)$/i.test(src))return src;if(/^https:\/\/[^\s"'<>]+$/i.test(src))return src;return ''}
+function renderOverview(){const root=document.getElementById('overview-grid');if(!root)return;root.innerHTML=overview.slice(0,3).map((card,i)=>`<article class="overview-card">${safeImage(card.image)?`<img class="overview-image" src="${esc(safeImage(card.image))}" alt="${esc(card.title)}" loading="lazy">`:`<div class="overview-placeholder placeholder-${i}" aria-hidden="true"></div>`}<div class="overview-body"><h3>${esc(card.title)}</h3><p>${esc(card.description)}</p>${i===2?'<span class="coming-label">Coming Soon</span>':''}</div></article>`).join('')}
+async function loadOverview(){try{const response=await fetch('https://raw.githubusercontent.com/aevonmc/AevonmcWebsite/main/overview.json?t='+Date.now(),{cache:'no-store'});if(!response.ok)return;const data=await response.json();if(Array.isArray(data)&&data.length===3){overview=data;renderOverview()}}catch(e){console.warn('Overview unavailable:',e)}}
+// Read committed content directly from GitHub, bypassing GitHub Pages deployment lag.
 // The public repository is readable without credentials. Never expose admin tokens here.
 const LIVE_POSTS_URL='https://raw.githubusercontent.com/aevonmc/AevonmcWebsite/main/posts.json';
+const API_POSTS_URL='https://api.github.com/repos/aevonmc/AevonmcWebsite/contents/posts.json?ref=main';
 const LOCAL_POSTS_URL='posts.json';
 const LIVE_SIGNAL_KEY='aevonmc-public-posts-updated';
-let lastPostsCheck=0, postsRequest=null;
+let lastPostsCheck=0,postsRequest=null,postsSource='';
+function decodeGitHubContents(encoded){
+ const binary=atob(encoded.replace(/\s/g,''));
+ return JSON.parse(new TextDecoder().decode(Uint8Array.from(binary,c=>c.charCodeAt(0))));
+}
 async function getFreshPosts(){
- const urls=[LIVE_POSTS_URL+'?v='+Date.now(),LOCAL_POSTS_URL+'?v='+Date.now()];
- let lastError;
- for(const url of urls){
-  try{const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);
-   const data=await r.json();if(!Array.isArray(data))throw Error('Invalid posts data');return data;
-  }catch(err){lastError=err}
+ // GitHub's Contents API reads the committed main-branch file, independent of Pages deployment.
+ // A unique URL avoids browser/CDN reuse. Raw GitHub is a backup if the API is rate-limited.
+ const stamp=Date.now();let errors=[];
+ for(const [url,source] of [[API_POSTS_URL+'&_='+stamp,'GitHub repository'],[LIVE_POSTS_URL+'?v='+stamp,'GitHub raw']]){
+  try{
+   const response=await fetch(url,{cache:'no-store',headers:{'Accept':'application/vnd.github+json'}});
+   if(!response.ok)throw Error('HTTP '+response.status);
+   const payload=await response.json();
+   const data=source==='GitHub repository'?decodeGitHubContents(payload.content||''):payload;
+   if(!Array.isArray(data))throw Error('Invalid posts.json array');
+   postsSource=source;return data;
+  }catch(err){errors.push(source+': '+err.message)}
  }
- throw lastError||Error('Could not load posts');
+ // Never silently show a stale GitHub Pages file as if it were current.
+ throw Error('Cannot reach the current GitHub posts.json ('+errors.join('; ')+')');
+}
+function contentNotice(message){
+ let el=document.getElementById('content-sync-notice');
+ if(!el){el=document.createElement('div');el.id='content-sync-notice';el.setAttribute('role','status');main.before(el)}
+ el.textContent=message;el.hidden=!message;
 }
 async function refreshPosts(){
  if(postsRequest)return postsRequest;
@@ -124,7 +149,7 @@ async function refreshPosts(){
   try{
    const updated=await getFreshPosts();
    const changed=JSON.stringify(updated)!==JSON.stringify(posts);
-   posts=updated;lastPostsCheck=Date.now();
+   posts=updated;lastPostsCheck=Date.now();contentNotice('');
    if(changed){
     const search=document.getElementById('search');const query=search?.value||'';
     route();if(search&&document.getElementById('search')){
@@ -132,13 +157,13 @@ async function refreshPosts(){
      const parts=location.hash.slice(2).split('/');if(categories[parts[0]]&&serverCategories[parts[1]])renderCards(parts[0],parts[1],query);
     }
    }
-  }catch(err){console.warn('Unable to refresh posts; retaining last successful content:',err)}
+  }catch(err){contentNotice('Unable to check new posts on GitHub. Showing last loaded content. Please try again later.');console.warn('Unable to refresh posts:',err)}
  })().finally(()=>{postsRequest=null});
  return postsRequest;
 }
 async function init(){
- document.getElementById('year').textContent=new Date().getFullYear();particles();
- try{posts=await getFreshPosts();lastPostsCheck=Date.now()}
+ document.getElementById('year').textContent=new Date().getFullYear();particles();loadOverview();
+ try{posts=await getFreshPosts();lastPostsCheck=Date.now();contentNotice('')}
  catch(err){console.error('Could not load posts:',err);main.innerHTML='<div class="empty">Could not load posts. Please refresh the page.</div>';return}
  window.addEventListener('hashchange',()=>{route();refreshPosts();scrollTo(0,0)});
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshPosts()});
@@ -148,7 +173,7 @@ async function init(){
    posts=update.posts;lastPostsCheck=Date.now();route();
   }}catch{}refreshPosts();
  }});
- setInterval(()=>{if(!document.hidden&&location.hash.startsWith('#/'))refreshPosts()},15000);
+ setInterval(()=>{if(!document.hidden&&location.hash.startsWith('#/'))refreshPosts()},60000);
  route();
 }
 init();

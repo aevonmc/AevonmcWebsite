@@ -1,0 +1,20 @@
+AEVONMC — GitHub-only content publishing repair
+
+Upload ALL files and folders in this directory to the ROOT of the aevonmc/AevonmcWebsite repository, on branch main. Keep the existing posts.json contents; this ZIP includes the posts.json from your uploaded website and should NOT overwrite newer live posts if you have published anything since downloading it.
+
+WHAT CHANGED
+- Public Rules and Guides load posts.json from the public GitHub Contents API for main branch, rather than waiting for GitHub Pages deployments.
+- If GitHub's API cannot be reached, the public site tries the raw GitHub repository. It does not silently fall back to potentially outdated GitHub Pages data.
+- A visible warning appears if a refresh fails.
+- Admin save, edit, and delete continue to use GitHub Contents API, checking latest commit SHA and verifying saved content.
+- The existing LifeSteaL / Survival Economy separation and original design remain.
+- Legacy serverCategory fields are understood as well as server fields.
+
+CHECKLIST
+1. Upload/commit updated app.js, admin.js, index.html, styles.css to main. Other files can stay as-is.
+2. Verify GitHub repo main/posts.json contains your new post with category: rules or guides, server: lifesteal or survival-economy, and published: true.
+3. Open https://aevonsmp.online/#/rules/lifesteal or the corresponding category URL after Pages deploys the code update.
+4. Admin GitHub token needs Contents: Read and write for this repository; the token is entered only into the admin browser session.
+5. If a save reports failure, check the displayed GitHub HTTP error. Do not assume it was published.
+
+NOTE: GitHub's unauthenticated API is rate limited; the public site checks every 60 seconds and on navigation/focus. This is suitable for a small static website, not a high-traffic real-time database.
