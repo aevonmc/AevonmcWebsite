@@ -83,3 +83,10 @@ body{background:#77c7f2 url("assets/realistic-clouds.webp") center center / cove
 .content .post-image{margin:18px 0;text-align:center}.content .post-image img{max-width:100%;height:auto;border-radius:12px;box-shadow:0 5px 20px #133a6226}.content u{text-underline-offset:3px}
 
 /* Optional Google Fonts for rich post typography; system fonts remain available offline. */
+
+/* Keep every screenshot within its Rules/Guides article, at its original aspect ratio. */
+.article,.article .content,.article .content p,.article .content figure {min-width:0;max-width:100%;box-sizing:border-box;}
+.article .content {overflow-wrap:anywhere;overflow-x:hidden;}
+.article .content img,.article .content figure img,.article .post-image img {display:block;width:auto !important;max-width:100% !important;height:auto !important;max-height:75vh;object-fit:contain;object-position:left center;box-sizing:border-box;border-radius:9px;}
+.article .post-image {margin:16px 0;max-width:100%;}
+@media(max-width:650px){.article .content img,.article .post-image img{max-height:60vh;}}

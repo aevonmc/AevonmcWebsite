@@ -15,3 +15,9 @@
 .rich-content:empty:before{content:attr(data-placeholder);color:#788b9a;pointer-events:none}
 .rich-content img{display:block;max-width:100%;height:auto;margin:10px 0;border-radius:9px}
 .rich-content p{margin:0 0 10px}.rich-content h2,.rich-content h3{margin:12px 0 6px}
+
+/* Auto-fit pasted/uploaded screenshots inside the editable post area. */
+.rich-content {min-width:0;max-width:100%;overflow-x:hidden;box-sizing:border-box;}
+.rich-content img,.rich-content figure img {display:block;max-width:100% !important;width:auto !important;height:auto !important;max-height:70vh;object-fit:contain;object-position:left center;box-sizing:border-box;}
+.rich-content figure,.rich-content p {max-width:100%;min-width:0;}
+@media(max-width:650px){.rich-content img,.rich-content figure img{max-height:55vh;}}

@@ -1,11 +1,7 @@
-AevonMC live Rules/Guides sync + icon-only navbar
+AevonMC screenshot auto-fit update
 
-Replace these five files in the repository root:
-index.html, admin.html, app.js, admin.js, admin.css
+Replace styles.css, admin.css, index.html, and admin.html in the repository root.
+Keep app.js, admin.js, posts.json and all other files unchanged.
+Commit to main, wait for GitHub Pages deployment, and hard-refresh the site.
 
-Do NOT replace posts.json or your assets. Commit to main and wait for this one code deployment.
-After installation, post updates are read from the public GitHub main branch without waiting for subsequent GitHub Pages builds. The public page checks every 15 seconds when visible, on navigation, and when returning to the tab. Another open tab in the same browser receives a storage notification.
-
-GitHub must first accept each save/delete. GitHub raw content may be briefly cached; changes cannot be guaranteed instantaneous for every visitor. If the raw endpoint is unavailable, the site falls back to the deployed posts.json.
-
-Keep your fine-grained token private.
+Images preserve their aspect ratio and shrink to fit the content column. Large screenshots are capped to a viewport-relative height without cropping. Applies to the editor and public Rules/Guides posts.
