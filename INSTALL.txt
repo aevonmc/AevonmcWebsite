@@ -1,2 +1,1 @@
-Replace index.html and styles.css in your GitHub Pages repository. Keep all other files, especially posts.json and app.js.
-Restores horizontal clouds only for LifeSteaL and Economy themes; no falling particles or homepage clouds. Homepage nav buttons/dropdowns now use visible sky-blue colors.
+Replace only styles.css in your GitHub Pages repository. This increases the LifeSteaL Coming Soon heading size and changes it to a soft gray. All other files remain unchanged.
