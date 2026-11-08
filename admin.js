@@ -37,6 +37,9 @@ document.querySelectorAll('[data-format]').forEach(btn=>btn.addEventListener('cl
  if(kind==='color'){insertText('{{color:'+$('text-color').value+'|','}}');return}
  const pair=formatMap[kind];if(pair)insertText(pair[0],pair[1]);
 }));
+// Apply a font or size to the selected text using safe, portable post markup.
+$('apply-font').addEventListener('click',()=>insertText('{{font:'+$('font-family').value+'|','}}'));
+$('apply-size').addEventListener('click',()=>insertText('{{size:'+$('font-size').value+'|','}}'));
 const emojiList='😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😍 🥰 😘 😎 🤩 🥳 😭 😢 😡 🤔 🫡 😴 💖 ❤️ 🧡 💛 💚 💙 💜 🖤 🤍 💯 ✨ ⭐ 🌟 🔥 🎉 🎊 🎮 🕹️ 🏆 👑 💎 ⚔️ 🛡️ 🏹 🐉 ☁️ 🌈 🌸 🌺 🌻 🌍 👍 👎 👏 🙌 💪 🤝 🙏 👀 📢 📌 📜 📖 🚀 ✅ ❌ ⚠️'.split(' ');
 for(const emoji of emojiList){const b=document.createElement('button');b.type='button';b.textContent=emoji;b.title=emoji;b.addEventListener('click',()=>{const el=$('content');el.setRangeText(emoji,el.selectionStart,el.selectionEnd,'end');el.focus()});$('emoji-picker').append(b)}
 $('emoji-toggle').addEventListener('click',()=>{$('emoji-picker').hidden=!$('emoji-picker').hidden});
