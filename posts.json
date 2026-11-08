@@ -22,5 +22,13 @@
     "description": "test",
     "published": true,
     "content": "\n**text**\n"
+  },
+  {
+    "title": "test",
+    "slug": "test",
+    "category": "rules",
+    "description": "test",
+    "published": true,
+    "content": "testsetsetetsetset**sssseees**"
   }
 ]
