@@ -16,7 +16,7 @@ function edit(i){editing=i;const p=i<0?{title:'',slug:'',category:'rules',descri
 function slugify(s){return s.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,100)}
 $('title').addEventListener('input',()=>{if(editing===-1&&(!$('slug').value||$('slug').dataset.auto==='yes')){$('slug').value=slugify($('title').value);$('slug').dataset.auto='yes'}});
 $('slug').addEventListener('input',()=>{$('slug').dataset.auto='no'});
-$('connect-form').addEventListener('submit',async e=>{e.preventDefault();const repo=REPO,branch=BRANCH,token=$('token').value.trim();if(!token){alert('Enter your GitHub access token.');return}auth={repo,branch,token};try{const user=await github('GET','/user');if(user.login?.toLowerCase()!==OWNER_LOGIN||user.id!==OWNER_ID)throw Error('Access denied. Only the original @aevonmc account can connect.');const repoInfo=await github('GET','/repos/'+REPO);if(repoInfo.owner?.id!==OWNER_ID||repoInfo.full_name?.toLowerCase()!==REPO.toLowerCase()||!repoInfo.permissions?.push)throw Error('The token does not have write access to AevonmcWebsite.');await reload();$('token').value='';$('login').hidden=true;$('dashboard').hidden=false;$('logout').hidden=false;$('connected').textContent='@'+OWNER_LOGIN+' · '+repo+' · '+branch}catch(err){auth=null;alert('Could not connect: '+errorMessage(err))}});
+$('connect-form').addEventListener('submit',async e=>{e.preventDefault();const repo=REPO,branch=BRANCH,token=$('token').value.trim();if(!token){alert('Enter your GitHub access token.');return}auth={repo,branch,token};try{const user=await github('GET','/user');if(user.login?.toLowerCase()!==OWNER_LOGIN||user.id!==OWNER_ID)throw Error('Access denied. Only the original @aevonmc account can connect.');const repoInfo=await github('GET','/repos/'+REPO);if(repoInfo.owner?.id!==OWNER_ID||repoInfo.full_name?.toLowerCase()!==REPO.toLowerCase()||!repoInfo.permissions?.push)throw Error('The token does not have write access to AevonmcWebsite.');await reload();$('token').value='';$('login').hidden=true;$('dashboard').hidden=false;$('logout').hidden=false;$('connected').textContent='@'+OWNER_LOGIN+' · '+repo+' · '+branch;edit(-1)}catch(err){auth=null;alert('Could not connect: '+errorMessage(err))}});
 $('logout').addEventListener('click',()=>{auth=null;posts=[];sha='';$('dashboard').hidden=true;$('login').hidden=false;$('logout').hidden=true;$('editor').hidden=true});
 $('new-post').addEventListener('click',()=>{$('slug').dataset.auto='yes';edit(-1)});
 $('cancel').addEventListener('click',()=>{$('editor').hidden=true});
@@ -25,3 +25,36 @@ $('filter').addEventListener('input',render);$('category-filter').addEventListen
 $('post-list').addEventListener('click',async e=>{const button=e.target.closest('button');if(!button||busy)return;if(button.dataset.edit!==undefined){edit(Number(button.dataset.edit));return}if(button.dataset.delete!==undefined){const i=Number(button.dataset.delete),p=posts[i];if(!confirm('Permanently delete "'+p.title+'"?'))return;const previous=posts.slice();posts.splice(i,1);try{await commit('Delete '+p.category+' post: '+p.title)}catch{posts=previous;render()}}});
 $('post-form').addEventListener('submit',async e=>{e.preventDefault();if(busy)return;const post={title:$('title').value.trim(),slug:$('slug').value.trim(),category:$('category').value,description:$('description').value.trim(),published:$('published').checked,content:$('content').value};if(!post.title||!post.content.trim()||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(post.slug)){status('Check title, slug and content.','error');return}if(posts.some((p,i)=>i!==editing&&p.category===post.category&&p.slug===post.slug)){status('That URL slug already exists in this category.','error');return}const previous=posts.slice();if(editing<0)posts.push(post);else posts[editing]=post;try{await commit((editing<0?'Create ':'Update ')+post.category+' post: '+post.title)}catch{posts=previous;render()}});
 // Repository and owner are deliberately fixed to the verified GitHub account.
+
+// Formatting tools insert safe Markdown or the supported color notation.
+function insertText(before,after='',placeholder='text'){
+ const el=$('content'),start=el.selectionStart,end=el.selectionEnd,selection=el.value.slice(start,end)||placeholder;
+ el.setRangeText(before+selection+after,start,end,'select');el.focus();el.setSelectionRange(start+before.length,start+before.length+selection.length);
+}
+const formatMap={bold:['**','**'],italic:['*','*'],underline:['++','++'],heading:['\n## ','\n'],link:['[','](https://example.com)']};
+document.querySelectorAll('[data-format]').forEach(btn=>btn.addEventListener('click',()=>{
+ const kind=btn.dataset.format;
+ if(kind==='color'){insertText('{{color:'+$('text-color').value+'|','}}');return}
+ const pair=formatMap[kind];if(pair)insertText(pair[0],pair[1]);
+}));
+const emojiList='😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😍 🥰 😘 😎 🤩 🥳 😭 😢 😡 🤔 🫡 😴 💖 ❤️ 🧡 💛 💚 💙 💜 🖤 🤍 💯 ✨ ⭐ 🌟 🔥 🎉 🎊 🎮 🕹️ 🏆 👑 💎 ⚔️ 🛡️ 🏹 🐉 ☁️ 🌈 🌸 🌺 🌻 🌍 👍 👎 👏 🙌 💪 🤝 🙏 👀 📢 📌 📜 📖 🚀 ✅ ❌ ⚠️'.split(' ');
+for(const emoji of emojiList){const b=document.createElement('button');b.type='button';b.textContent=emoji;b.title=emoji;b.addEventListener('click',()=>{const el=$('content');el.setRangeText(emoji,el.selectionStart,el.selectionEnd,'end');el.focus()});$('emoji-picker').append(b)}
+$('emoji-toggle').addEventListener('click',()=>{$('emoji-picker').hidden=!$('emoji-picker').hidden});
+$('image-upload').addEventListener('click',()=>$('image-file').click());
+$('image-file').addEventListener('change',async()=>{const file=$('image-file').files[0];if(file)await uploadImage(file);$('image-file').value=''});
+$('content').addEventListener('paste',async e=>{const file=Array.from(e.clipboardData?.files||[]).find(f=>f.type.startsWith('image/'));if(file){e.preventDefault();await uploadImage(file)}});
+async function uploadImage(file){
+ if(!auth){$('upload-status').textContent='Connect to GitHub first.';return}
+ const types={'image/png':'png','image/jpeg':'jpg','image/gif':'gif','image/webp':'webp'};
+ const ext=types[file.type];if(!ext){$('upload-status').textContent='Supported: PNG, JPG, GIF and WebP.';return}
+ if(file.size>5*1024*1024){$('upload-status').textContent='Images must be 5 MB or smaller.';return}
+ const uploadButton=$('image-upload');uploadButton.disabled=true;
+ $('upload-status').textContent='Uploading image to GitHub...';
+ try{
+  const bytes=new Uint8Array(await file.arrayBuffer());let binary='';for(let i=0;i<bytes.length;i+=8192)binary+=String.fromCharCode(...bytes.subarray(i,i+8192));
+  const name='assets/uploads/'+Date.now()+'-'+Array.from(crypto.getRandomValues(new Uint8Array(6)),x=>x.toString(16).padStart(2,'0')).join('')+'.'+ext;
+  await github('PUT','/repos/'+REPO+'/contents/'+name,{message:'Upload post image '+name,content:btoa(binary),branch:BRANCH});
+  const el=$('content');const pos=el.selectionStart;el.setRangeText('\n![Screenshot]('+name+')\n',pos,pos,'end');el.focus();
+  $('upload-status').textContent='Image uploaded and inserted. Save your post to publish it.';
+ }catch(err){$('upload-status').textContent='Image upload failed: '+errorMessage(err)}finally{uploadButton.disabled=false}
+}
