@@ -338,27 +338,13 @@ body:not(.world-lifesteal):not(.world-economy) .topbar .nav-dropdown .nav-menu{
  body.world-lifesteal .sky .cloud,body.world-economy .sky .cloud{animation:none!important;will-change:auto;}
 }
 
-/* LifeSteaL Rules/Guides: replace the decorated banner with a simple bold heading. */
-body.world-lifesteal .lifesteal-coming-soon{
-  display:flex;align-items:center;justify-content:center;text-align:center;
-  min-height:190px;padding:35px 16px;margin:28px auto 32px;max-width:1000px;
-}
-body.world-lifesteal .lifesteal-coming-soon h1{
-  font-family:Fredoka,system-ui,sans-serif;font-weight:700;
-  font-size:clamp(64px,10vw,120px);line-height:1.12;margin:0;
-  color:#c8cbd2;text-shadow:none;letter-spacing:.01em;
-}
-
-/* Explicit large gray Coming Soon title, only on LifeSteaL Rules / Guides. */
-html body.world-lifesteal #main .lifesteal-coming-soon h1 {
-  font-family: Fredoka, system-ui, sans-serif !important;
-  font-size: clamp(72px, 11vw, 140px) !important;
-  font-weight: 800 !important;
-  line-height: 1.08 !important;
-  color: #c8cbd2 !important;
-  text-shadow: none !important;
-  background: none !important;
-  -webkit-text-fill-color: #c8cbd2 !important;
-  letter-spacing: 0 !important;
-}
-@media(max-width:600px){html body.world-lifesteal #main .lifesteal-coming-soon h1{font-size:clamp(56px,13vw,86px)!important}}
+/* Homepage overview: scoped to the new three-card section. */
+.overview-section{max-width:1100px;margin:0 auto 75px;padding:0 4px;width:100%;}
+.overview-section>h2{text-align:center;font-family:Fredoka,system-ui,sans-serif;font-size:clamp(32px,4.5vw,49px);color:#215c94;margin:0 0 27px;font-weight:700;}
+.overview-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:stretch;}
+.overview-card{min-width:0;overflow:hidden;background:rgba(255,255,255,.9);border:3px solid #fff;border-radius:25px;box-shadow:0 7px 0 #9dc8ed;display:flex;flex-direction:column;}
+.overview-card>img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#9dd5f7;}
+.overview-card-body{padding:20px 20px 25px;flex:1;}
+.overview-card h3{font-family:Fredoka,system-ui,sans-serif;color:#245f96;font-size:clamp(21px,2.5vw,27px);line-height:1.2;margin:0 0 9px;}
+.overview-card p{font-size:15px;line-height:1.55;color:#506d8f;font-weight:700;margin:0;}
+@media(max-width:750px){.overview-grid{grid-template-columns:1fr;max-width:480px;margin:auto;gap:20px;}}

@@ -1,1 +1,3 @@
-Replace app.js and index.html in your GitHub Pages repository root. Keep styles.css, posts.json, admin files, and uploaded images unchanged. LifeSteaL Rules and Guides (including direct post URLs) now show only Coming Soon. Economy remains unchanged.
+AevonMC homepage overview update (only homepage changes).
+Replace app.js, index.html, styles.css and add the three assets/overview-*.svg files in the corresponding assets folder.
+Keep posts.json, admin files and existing assets unchanged.
