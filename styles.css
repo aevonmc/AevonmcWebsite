@@ -412,3 +412,46 @@ html body:not(.world-lifesteal):not(.world-economy) main#main .hero-connect > h1
     font-size: clamp(48px, 12vw, 86px) !important;
   }
 }
+
+/* Homepage-only: equal side columns keep the title centered and clear of Discord/server info. */
+html body:not(.world-lifesteal):not(.world-economy) main#main .hero-connect {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.65fr) minmax(0,1fr);
+  align-items:center;
+  gap:clamp(10px,2vw,24px);
+  width:100%;
+  max-width:1090px;
+  margin-inline:auto;
+}
+html body:not(.world-lifesteal):not(.world-economy) main#main .hero-connect > h1 {
+  grid-column:2;
+  min-width:0;
+  width:100%;
+  text-align:center;
+  white-space:nowrap;
+  font-size:clamp(48px,7.5vw,104px)!important;
+  letter-spacing:-.035em!important;
+}
+html body:not(.world-lifesteal):not(.world-economy) main#main .hero-connect > .server-card {grid-column:1;min-width:0;}
+html body:not(.world-lifesteal):not(.world-economy) main#main .hero-connect > .discord-card {grid-column:3;min-width:0;}
+html body:not(.world-lifesteal):not(.world-economy) main#main .hero > p {
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  text-shadow:none!important;
+}
+@media(max-width:850px){
+  html body:not(.world-lifesteal):not(.world-economy) main#main .hero-connect {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    max-width:640px;
+  }
+  html body:not(.world-lifesteal):not(.world-economy) main#main .hero-connect > h1 {
+    grid-column:1/-1;
+    grid-row:1;
+    font-size:clamp(48px,10vw,95px)!important;
+  }
+  html body:not(.world-lifesteal):not(.world-economy) main#main .hero-connect > .server-card {grid-column:1;grid-row:2;}
+  html body:not(.world-lifesteal):not(.world-economy) main#main .hero-connect > .discord-card {grid-column:2;grid-row:2;}
+}
+@media(max-width:420px){
+  html body:not(.world-lifesteal):not(.world-economy) main#main .hero-connect > h1 {font-size:clamp(44px,12vw,60px)!important;}
+}

@@ -1,1 +1,2 @@
-Replace styles.css and index.html in the GitHub repository root. Do not replace app.js, posts.json, admin files, or assets. This changes only the homepage AevonMC title styling.
+Homepage-only fix: replace styles.css and index.html in the GitHub repository root. Do not replace app.js, posts.json or other files.
+Title is centered between server IP and Discord; subtitle is white.
