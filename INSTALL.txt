@@ -1,2 +1,3 @@
-Homepage-only fix: replace styles.css and index.html in the GitHub repository root. Do not replace app.js, posts.json or other files.
-Title is centered between server IP and Discord; subtitle is white.
+AevonMC homepage alignment + white subtitle fix.
+Replace index.html, styles.css and app.js in the repository root.
+Do not replace posts.json or any admin files.

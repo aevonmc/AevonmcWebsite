@@ -455,3 +455,62 @@ html body:not(.world-lifesteal):not(.world-economy) main#main .hero > p {
 @media(max-width:420px){
   html body:not(.world-lifesteal):not(.world-economy) main#main .hero-connect > h1 {font-size:clamp(44px,12vw,60px)!important;}
 }
+
+/* Homepage title alignment fix: target the actual generated DOM, not missing child selectors. */
+html body:not(.world-lifesteal):not(.world-economy) main#main section.hero .hero-connect {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,2.4fr) minmax(0,1fr) !important;
+  align-items:center !important;
+  column-gap:clamp(12px,2vw,28px) !important;
+  width:100% !important;
+  max-width:1180px !important;
+  margin-inline:auto !important;
+}
+html body:not(.world-lifesteal):not(.world-economy) main#main section.hero .hero-connect > .connect-card.server-card {
+  grid-column:1 !important;grid-row:1 !important;min-width:0 !important;
+}
+html body:not(.world-lifesteal):not(.world-economy) main#main section.hero .hero-connect > .connect-card.discord-card {
+  grid-column:3 !important;grid-row:1 !important;min-width:0 !important;
+}
+html body:not(.world-lifesteal):not(.world-economy) main#main section.hero .hero-connect > h1.home-brand-title {
+  grid-column:2 !important;grid-row:1 !important;
+  min-width:0 !important;width:100% !important;
+  box-sizing:border-box !important;
+  margin:0 !important;padding:0 !important;
+  font-family:Fredoka,system-ui,sans-serif !important;
+  font-size:clamp(45px,7vw,94px) !important;
+  font-weight:800 !important;
+  letter-spacing:-.045em !important;
+  line-height:1.1 !important;
+  white-space:nowrap !important;
+  text-align:center !important;
+  color:#5aa1ff !important;
+  -webkit-text-fill-color:#5aa1ff !important;
+  -webkit-text-stroke:0 !important;
+  text-shadow:none !important;
+  filter:none !important;
+}
+html body:not(.world-lifesteal):not(.world-economy) main#main section.hero .hero-connect > h1.home-brand-title span {
+  color:#ffdd55 !important;-webkit-text-fill-color:#ffdd55 !important;
+  -webkit-text-stroke:0 !important;text-shadow:none !important;
+}
+html body:not(.world-lifesteal):not(.world-economy) main#main section.hero > p.home-hero-subtitle {
+  color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;
+  text-shadow:none !important;
+}
+@media(max-width:900px){
+  html body:not(.world-lifesteal):not(.world-economy) main#main section.hero .hero-connect {
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    max-width:650px !important;
+    row-gap:10px !important;
+  }
+  html body:not(.world-lifesteal):not(.world-economy) main#main section.hero .hero-connect > h1.home-brand-title {
+    grid-column:1/-1 !important;grid-row:1 !important;
+    font-size:clamp(50px,10vw,94px) !important;
+  }
+  html body:not(.world-lifesteal):not(.world-economy) main#main section.hero .hero-connect > .connect-card.server-card {grid-column:1 !important;grid-row:2 !important;}
+  html body:not(.world-lifesteal):not(.world-economy) main#main section.hero .hero-connect > .connect-card.discord-card {grid-column:2 !important;grid-row:2 !important;}
+}
+@media(max-width:440px){
+  html body:not(.world-lifesteal):not(.world-economy) main#main section.hero .hero-connect > h1.home-brand-title {font-size:clamp(43px,12vw,65px) !important;}
+}
