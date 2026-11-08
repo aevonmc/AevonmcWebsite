@@ -1,1 +1,3 @@
-Replace index.html and styles.css in the GitHub Pages repository root. Both files are required: index.html updates the stylesheet URL to prevent cached CSS. Do not replace app.js, posts.json, or any admin files. This change affects only the LifeSteaL Coming Soon title.
+REPLACE ALL THREE FILES IN YOUR GITHUB REPOSITORY ROOT: app.js, styles.css, index.html.
+The actual LifeSteaL banner (heart and RULES/GUIDES • AEVONMC) is removed in app.js and replaced by a large gray Coming Soon heading.
+Do not replace posts.json or admin files. Wait for GitHub Pages deployment, then hard refresh.
