@@ -73,3 +73,8 @@ body{background:#77c7f2 url("assets/realistic-clouds.webp") center center / cove
 /* Homepage connection headings: larger, bold Arial; online counters remain compact and regular. */
 .hero-connect .connect-card > strong{font-family:Arial,Helvetica,sans-serif!important;font-size:23px!important;font-weight:700!important;line-height:1.12!important;}
 @media(max-width:480px){.hero-connect .connect-card > strong{font-size:19px!important;}}
+
+/* White live online text for Minecraft and Discord. */
+.hero-connect .live-count,
+.hero-connect .live-count.status-unavailable,
+.hero-connect .live-count.status-offline {color:#fff!important;}
