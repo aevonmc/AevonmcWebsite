@@ -3,6 +3,9 @@ const $=id=>document.getElementById(id);
 const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const OWNER_LOGIN='aevonmc', OWNER_ID=349076440, REPO='aevonmc/AevonmcWebsite', BRANCH='main';
 let auth=null,posts=[],sha='',editing=-1,busy=false;
+const SERVER_NAMES={lifesteal:'LifeSteaL','survival-economy':'Survival Economy'};
+const postServer=p=>SERVER_NAMES[p.server]?p.server:'survival-economy'; // legacy posts only
+const postKey=p=>[p.category,postServer(p),p.slug].join('::');
 const utf8ToBase64=s=>{const bytes=new TextEncoder().encode(s);let binary='';for(const byte of bytes)binary+=String.fromCharCode(byte);return btoa(binary)};
 const base64ToUtf8=s=>{const binary=atob(s.replace(/\s/g,''));return new TextDecoder().decode(Uint8Array.from(binary,c=>c.charCodeAt(0)))};
 function status(message,kind=''){const el=$('status');el.textContent=message;el.className='notice '+kind}
@@ -11,8 +14,8 @@ async function github(method,path,body){if(!auth)throw Error('Not connected');co
 function filePath(){return '/repos/'+auth.repo+'/contents/posts.json?ref='+encodeURIComponent(auth.branch)}
 async function reload(){const data=await github('GET',filePath());if(data.type!=='file'||!data.content||!data.sha)throw Error('posts.json is missing or not a file');const parsed=JSON.parse(base64ToUtf8(data.content));if(!Array.isArray(parsed))throw Error('posts.json must contain an array');posts=parsed;sha=data.sha;render();status('Content loaded from GitHub.','ok')}
 async function commit(message){if(busy)return;busy=true;$('save').disabled=true;try{const body={message,content:utf8ToBase64(JSON.stringify(posts,null,2)+'\n'),sha,branch:auth.branch};const data=await github('PUT','/repos/'+auth.repo+'/contents/posts.json',body);if(!data.content?.sha)throw Error('GitHub did not confirm the file update');sha=data.content.sha;status('Published to GitHub. GitHub Pages will update shortly.','ok');$('editor').hidden=true;render()}catch(e){status('Save failed: '+errorMessage(e)+'. If HTTP 403, check token Contents write permission. If HTTP 409, refresh before retrying.','error');throw e}finally{busy=false;$('save').disabled=false}}
-function render(){const query=$('filter').value.toLowerCase(),cat=$('category-filter').value;const list=$('post-list');list.replaceChildren();const items=posts.map((p,i)=>({p,i})).filter(({p})=>(!cat||p.category===cat)&&[p.title,p.description,p.content].join(' ').toLowerCase().includes(query));if(!items.length){list.textContent='No posts found.';return}for(const {p,i} of items){const row=document.createElement('div');row.className='post-row';row.innerHTML='<div><strong>'+escapeHtml(p.title)+'</strong><small>'+escapeHtml(p.category)+' · '+escapeHtml(p.server==='lifesteal'?'LifeSteaL':'Survival Economy')+' · '+(p.published?'Published':'Draft')+' · /'+escapeHtml(p.slug)+'</small></div><div class="post-actions"><button type="button" data-edit="'+i+'">Edit</button><button type="button" class="danger" data-delete="'+i+'">Delete</button></div>';list.append(row)}}
-function edit(i){editing=i;const p=i<0?{title:'',slug:'',category:'rules',server:'lifesteal',description:'',content:'',published:true}:posts[i];$('server').value=p.server==='lifesteal'?'lifesteal':'survival-economy';$('editor-title').textContent=i<0?'Create new post':'Edit post';$('save').textContent=i<0?'Publish':'Apply Changes';for(const key of ['title','slug','category','description','content'])$(key).value=p[key]||'';loadRichContent(p.content||'');$('editor').hidden=false;$('editor').scrollIntoView({behavior:'smooth',block:'start'})}
+function render(){const query=$('filter').value.toLowerCase(),cat=$('category-filter').value,server=$('server-filter').value;const list=$('post-list');list.replaceChildren();const items=posts.map((p,i)=>({p,i})).filter(({p})=>(!cat||p.category===cat)&&(!server||postServer(p)===server)&&[p.title,p.description,p.content].join(' ').toLowerCase().includes(query));if(!items.length){list.textContent='No posts found.';return}for(const {p,i} of items){const row=document.createElement('div');row.className='post-row';row.innerHTML='<div><strong>'+escapeHtml(p.title)+'</strong><small>'+escapeHtml(SERVER_NAMES[postServer(p)])+' / '+escapeHtml(p.category)+' · '+(p.published?'Published':'Draft')+' · /'+escapeHtml(p.slug)+'</small></div><div class="post-actions"><button type="button" data-edit="'+i+'">Edit</button><button type="button" class="danger" data-delete="'+i+'">Delete</button></div>';list.append(row)}}
+function edit(i){editing=i;const p=i<0?{title:'',slug:'',server:$('server-filter').value||'lifesteal',category:$('category-filter').value||'rules',description:'',content:'',published:true}:posts[i];$('editor-title').textContent=i<0?'Create new post':'Edit post';$('save').textContent=i<0?'Publish':'Apply Changes';for(const key of ['title','slug','category','description','content'])$(key).value=p[key]||'';$('server').value=postServer(p);loadRichContent(p.content||'');$('editor').hidden=false;$('editor').scrollIntoView({behavior:'smooth',block:'start'})}
 function slugify(s){return s.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,100)}
 $('title').addEventListener('input',()=>{if(editing===-1&&(!$('slug').value||$('slug').dataset.auto==='yes')){$('slug').value=slugify($('title').value);$('slug').dataset.auto='yes'}});
 $('slug').addEventListener('input',()=>{$('slug').dataset.auto='no'});
@@ -21,7 +24,7 @@ $('logout').addEventListener('click',()=>{auth=null;posts=[];sha='';$('dashboard
 $('new-post').addEventListener('click',()=>{$('slug').dataset.auto='yes';edit(-1)});
 $('cancel').addEventListener('click',()=>{$('editor').hidden=true});
 $('refresh').addEventListener('click',async()=>{if(!confirm('Discard any unsaved edits and reload from GitHub?'))return;try{await reload();$('editor').hidden=true}catch(e){status(errorMessage(e),'error')}});
-$('filter').addEventListener('input',render);$('category-filter').addEventListener('change',render);
+$('filter').addEventListener('input',render);$('category-filter').addEventListener('change',render);$('server-filter').addEventListener('change',render);
 // Always base mutations on the latest GitHub version, never on an old tab's cached array.
 async function latestPosts(){
  const data=await github('GET',filePath());
@@ -60,24 +63,24 @@ $('post-list').addEventListener('click',async e=>{
   const p=posts[Number(button.dataset.delete)];
   if(!confirm('Permanently delete "'+p.title+'" from '+p.category+'?'))return;
   const ok=await applyMutation(current=>{
-   const i=current.findIndex(x=>x.category===p.category&&x.slug===p.slug);
+   const i=current.findIndex(x=>postKey(x)===postKey(p));
    if(i<0)throw Error('Post already removed or changed. Refresh.');
    current.splice(i,1);
-  },'Delete '+p.category+' post: '+p.title);
+  },'Delete '+SERVER_NAMES[postServer(p)]+' / '+p.category+' post: '+p.title);
   if(ok)status('Deleted "'+p.title+'" from GitHub. It will disappear from the public page after deployment.','ok');
  }
 });
 $('post-form').addEventListener('submit',async e=>{
  e.preventDefault();if(busy)return;
- const post={title:$('title').value.trim(),slug:$('slug').value.trim(),category:$('category').value,server:$('server').value,description:$('description').value.trim(),published:true,content:serializeRichContent()};
- if(!post.title||!post.content.trim()||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(post.slug)){status('Check title, slug and content.','error');return}
- const original=editing<0?null:{category:posts[editing].category,slug:posts[editing].slug};
+ const post={title:$('title').value.trim(),slug:$('slug').value.trim(),server:$('server').value,category:$('category').value,description:$('description').value.trim(),published:true,content:serializeRichContent()};
+ if(!SERVER_NAMES[post.server]||!['rules','guides'].includes(post.category)||!post.title||!post.content.trim()||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(post.slug)){status('Check title, slug and content.','error');return}
+ const original=editing<0?null:{...posts[editing]};
  const ok=await applyMutation(current=>{
-  const index=original?current.findIndex(p=>p.category===original.category&&p.slug===original.slug):-1;
+  const index=original?current.findIndex(p=>postKey(p)===postKey(original)):-1;
   if(original&&index<0)throw Error('Original post was changed or removed. Refresh before editing.');
-  if(current.some((p,i)=>i!==index&&p.category===post.category&&p.slug===post.slug))throw Error('That URL slug already exists in this category.');
+  if(current.some((p,i)=>i!==index&&postKey(p)===postKey(post)))throw Error('That URL slug already exists in this server and content type.');
   if(index<0)current.push(post);else current[index]={...current[index],...post};
- },(original?'Apply changes to ':'Publish ')+post.category+' post: '+post.title);
+ },(original?'Apply changes to ':'Publish ')+SERVER_NAMES[post.server]+' / '+post.category+' post: '+post.title);
  if(ok){const url=new URL('index.html#/'+post.category+'/'+post.server+'/'+encodeURIComponent(post.slug),location.href).href;status('Changes saved and verified on GitHub. Public page (after deployment): '+url,'ok')}
 });
 // Repository and owner are deliberately fixed to the verified GitHub account.

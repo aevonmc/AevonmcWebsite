@@ -1,5 +1,12 @@
-AevonMC themed backgrounds + readable dropdown fix
+AevonMC server-specific publishing fix
 
-Upload index.html, app.js, and styles.css to the root of your GitHub Pages repository. Keep dropdown.js, admin files, posts.json, and assets unchanged. Commit to main, wait for deployment, then hard-refresh.
+Upload/replace these files in the ROOT of your GitHub Pages repository:
+admin.html, admin.js, index.html, app.js, styles.css
 
-Rules/Guides -> LifeSteal: crimson battlefield atmosphere. Rules/Guides -> Survival Economy: emerald/gold economy atmosphere. Homepage and category selection retain existing cloud background. Dropdown options are white on opaque backgrounds. Existing dropdown.js keeps 500ms hover-out and outside-click closing.
+Do not replace posts.json: your existing published content must be preserved.
+
+Admin: choose Minecraft server (LifeSteaL / Survival Economy) and content type (Rules / Guides). Add, edit and delete are scoped to that combination.
+
+Legacy posts without a server field are displayed under Survival Economy until you edit them and explicitly choose a server.
+
+Changes appear publicly after GitHub Pages deploys. Hard refresh your browser to clear old cached scripts.
