@@ -1,3 +1,1 @@
-AevonMC homepage overview update (only homepage changes).
-Replace app.js, index.html, styles.css and add the three assets/overview-*.svg files in the corresponding assets folder.
-Keep posts.json, admin files and existing assets unchanged.
+Replace only styles.css and index.html in your GitHub repository. Based on the latest three-card Overview update. Keep app.js, assets, posts.json, and admin files unchanged.

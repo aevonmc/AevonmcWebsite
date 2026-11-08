@@ -348,3 +348,20 @@ body:not(.world-lifesteal):not(.world-economy) .topbar .nav-dropdown .nav-menu{
 .overview-card h3{font-family:Fredoka,system-ui,sans-serif;color:#245f96;font-size:clamp(21px,2.5vw,27px);line-height:1.2;margin:0 0 9px;}
 .overview-card p{font-size:15px;line-height:1.55;color:#506d8f;font-weight:700;margin:0;}
 @media(max-width:750px){.overview-grid{grid-template-columns:1fr;max-width:480px;margin:auto;gap:20px;}}
+
+/* LifeSteaL Coming Soon: restore large gray title after homepage Overview update. */
+html body.world-lifesteal main#main section.lifesteal-coming-soon > h1 {
+  display:block !important;
+  font-family:Fredoka,system-ui,sans-serif !important;
+  font-size:clamp(72px, 11vw, 140px) !important;
+  font-weight:800 !important;
+  line-height:1.08 !important;
+  color:#c8cbd2 !important;
+  -webkit-text-fill-color:#c8cbd2 !important;
+  -webkit-text-stroke:0 !important;
+  text-shadow:none !important;
+  background:none !important;
+  margin:0 !important;
+  letter-spacing:.01em !important;
+}
+@media(max-width:600px){html body.world-lifesteal main#main section.lifesteal-coming-soon > h1{font-size:clamp(56px,13vw,86px)!important}}
