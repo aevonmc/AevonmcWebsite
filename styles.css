@@ -69,3 +69,7 @@ body{background:#77c7f2 url("assets/realistic-clouds.webp") center center / cove
 .hero-connect .connect-card > strong {font-family:Arial,Helvetica,sans-serif!important;font-size:15px!important;font-weight:700!important;line-height:1.05!important;}
 .hero-connect .connect-card {gap:0!important;row-gap:0!important;}
 @media(max-width:480px){.hero-connect .connect-label,.hero-connect .live-count{font-size:11px!important}.hero-connect .connect-card > strong{font-size:14px!important}}
+
+/* Homepage connection headings: larger, bold Arial; online counters remain compact and regular. */
+.hero-connect .connect-card > strong{font-family:Arial,Helvetica,sans-serif!important;font-size:23px!important;font-weight:700!important;line-height:1.12!important;}
+@media(max-width:480px){.hero-connect .connect-card > strong{font-size:19px!important;}}
