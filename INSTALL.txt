@@ -1,3 +1,1 @@
-AevonMC homepage alignment + white subtitle fix.
-Replace index.html, styles.css and app.js in the repository root.
-Do not replace posts.json or any admin files.
+Replace only styles.css and index.html in your GitHub Pages repository. This adjusts only spacing between the Economy Rules/Guides eyebrow label and diamond emblem. Keep app.js and all other files unchanged.

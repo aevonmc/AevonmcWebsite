@@ -514,3 +514,7 @@ html body:not(.world-lifesteal):not(.world-economy) main#main section.hero > p.h
 @media(max-width:440px){
   html body:not(.world-lifesteal):not(.world-economy) main#main section.hero .hero-connect > h1.home-brand-title {font-size:clamp(43px,12vw,65px) !important;}
 }
+
+/* Economy SMP: add breathing room between the RULES/GUIDES eyebrow and diamond emblem. */
+body.world-economy .server-banner .server-banner-content > .eyebrow {display:block; margin-bottom:22px;}
+@media (max-width:650px) {body.world-economy .server-banner .server-banner-content > .eyebrow {margin-bottom:16px;}}
