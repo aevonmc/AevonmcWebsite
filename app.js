@@ -89,6 +89,12 @@ function route(){
  const c=categories[category];
  if(bits.length===1){main.innerHTML=`<section class="page-heading"><div class="eyebrow">Choose your server</div><h1>${c.icon} ${c.name}</h1><p>Select a server to explore its ${c.name.toLowerCase()}.</p></section><section class="server-choices">${Object.entries(serverCategories).map(([id,v])=>`<a class="server-choice ${v.theme}" href="#/${category}/${id}">${serverArt(id)}<div class="server-choice-content"><span class="server-choice-icon">${v.icon}</span><h2>${v.name}</h2><p>${v.tagline}</p><span class="server-choice-action">View ${c.name} →</span></div></a>`).join('')}</section>`;return}
  const server=bits[1],v=serverCategories[server];if(!v){notFound();return}
+ // LifeSteaL is temporarily unavailable: hide search, posts and direct article URLs.
+ if(server==='lifesteal'){
+   main.innerHTML='<section class="lifesteal-coming-soon" aria-label="LifeSteaL SMP temporarily unavailable"><h1>Coming Soon</h1></section>';
+   document.title='Coming Soon • LifeSteaL SMP • AevonMC';
+   return;
+ }
  if(bits.length===2){main.innerHTML=`${server==='lifesteal'?'<section class="lifesteal-coming-soon" aria-label="LifeSteaL SMP coming soon"><h1>Coming Soon</h1></section>':`<section class="server-banner ${v.theme}">${serverArt(server)}<div class="server-banner-content"><div class="eyebrow">${c.name} • AevonMC</div><div class="server-symbol">${v.icon}</div><h1>${v.name}</h1><p>${v.tagline}</p><a class="server-back" href="#/${category}">← Choose another server</a></div></section>`}<div class="toolbar"><input class="search" id="search" placeholder="Search ${v.name} ${c.name.toLowerCase()}..." aria-label="Search posts"><span class="count" id="count"></span></div><section class="posts" id="posts"></section>`;const input=document.getElementById('search');input.addEventListener('input',()=>renderCards(category,server,input.value));renderCards(category,server,'');return}
  if(bits.length!==3){notFound();return}
  const post=posts.find(p=>p.category===category&&postServer(p)===server&&p.slug===bits[2]&&p.published===true);

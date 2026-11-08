@@ -1,3 +1,1 @@
-REPLACE ALL THREE FILES IN YOUR GITHUB REPOSITORY ROOT: app.js, styles.css, index.html.
-The actual LifeSteaL banner (heart and RULES/GUIDES • AEVONMC) is removed in app.js and replaced by a large gray Coming Soon heading.
-Do not replace posts.json or admin files. Wait for GitHub Pages deployment, then hard refresh.
+Replace app.js and index.html in your GitHub Pages repository root. Keep styles.css, posts.json, admin files, and uploaded images unchanged. LifeSteaL Rules and Guides (including direct post URLs) now show only Coming Soon. Economy remains unchanged.
