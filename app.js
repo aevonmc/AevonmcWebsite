@@ -64,6 +64,17 @@ function markdown(s){
 const serverCategories={lifesteal:{name:'LifeSteaL',icon:'❤',tagline:'High stakes. Every heart matters.',theme:'lifesteal'},'survival-economy':{name:'Survival Economy',icon:'✦',tagline:'Build, trade, and thrive together.',theme:'economy'}};
 // Older posts without a server field remain visible in Survival Economy until reassigned in Admin.
 const postServer=p=>serverCategories[p.server]?p.server:'survival-economy';
+// Decorative, original Minecraft-inspired pixel scenery (no external images or game assets).
+function serverArt(server){
+ const life=server==='lifesteal';
+ return `<div class="mc-art ${life?'mc-life':'mc-economy'}" aria-hidden="true">
+  <div class="mc-sun"></div><div class="mc-cloud mc-cloud-one"></div><div class="mc-cloud mc-cloud-two"></div>
+  <div class="mc-hill mc-hill-back"></div><div class="mc-hill mc-hill-front"></div>
+  <div class="mc-block mc-block-a"></div><div class="mc-block mc-block-b"></div><div class="mc-block mc-block-c"></div>
+  <div class="mc-spark mc-spark-one">${life?'❤':'✦'}</div><div class="mc-spark mc-spark-two">${life?'❤':'✦'}</div>
+  <div class="mc-emblem">${life?'❤':'◆'}</div>
+ </div>`;
+}
 function route(){
  let path;try{path=decodeURIComponent(location.hash.slice(1)||'/').replace(/\/+$/,'')||'/'}catch{notFound();return}
  const bits=path.split('/').filter(Boolean),category=bits[0];
@@ -72,9 +83,9 @@ function route(){
  if(!bits.length){main.innerHTML=`<section class="hero"><div class="eyebrow">Welcome to the skies</div><div class="hero-connect"><div class="connect-card server-card"><span class="live-count" id="minecraft-online" aria-live="polite">Checking players…</span><strong>aevonsmp.online</strong><button class="copy-server" type="button" data-copy-ip="aevonsmp.online" aria-label="Copy Minecraft server IP">Copy IP?</button></div><h1>Aevon<span>MC</span></h1><div class="connect-card discord-card"><span class="live-count" id="discord-online" aria-live="polite">Checking members…</span><strong>Discord Server</strong><a class="join-discord" href="https://discord.gg/Ad7JVWw5Jp" target="_blank" rel="noopener noreferrer">Click to Join?</a></div></div><p>Explore our server rules and helpful guides. Your next adventure starts here, above the clouds!</p></section><section class="home-grid">${Object.entries(categories).map(([id,c])=>`<a class="category-card" href="#/${id}"><span class="category-icon">${c.icon}</span><div><h2>${c.name}</h2><p>${c.desc}</p></div><span class="arrow">➜</span></a>`).join('')}</section>`;refreshLiveCounts();return}
  if(!categories[category]){notFound();return}
  const c=categories[category];
- if(bits.length===1){main.innerHTML=`<section class="page-heading"><div class="eyebrow">Choose your server</div><h1>${c.icon} ${c.name}</h1><p>Select a server to explore its ${c.name.toLowerCase()}.</p></section><section class="server-choices">${Object.entries(serverCategories).map(([id,v])=>`<a class="server-choice ${v.theme}" href="#/${category}/${id}"><span class="server-choice-icon">${v.icon}</span><h2>${v.name}</h2><p>${v.tagline}</p><span>View ${c.name} →</span></a>`).join('')}</section>`;return}
+ if(bits.length===1){main.innerHTML=`<section class="page-heading"><div class="eyebrow">Choose your server</div><h1>${c.icon} ${c.name}</h1><p>Select a server to explore its ${c.name.toLowerCase()}.</p></section><section class="server-choices">${Object.entries(serverCategories).map(([id,v])=>`<a class="server-choice ${v.theme}" href="#/${category}/${id}">${serverArt(id)}<div class="server-choice-content"><span class="server-choice-icon">${v.icon}</span><h2>${v.name}</h2><p>${v.tagline}</p><span class="server-choice-action">View ${c.name} →</span></div></a>`).join('')}</section>`;return}
  const server=bits[1],v=serverCategories[server];if(!v){notFound();return}
- if(bits.length===2){main.innerHTML=`<section class="server-banner ${v.theme}"><div class="eyebrow">${c.name} • AevonMC</div><div class="server-symbol">${v.icon}</div><h1>${v.name}</h1><p>${v.tagline}</p><a class="server-back" href="#/${category}">← Choose another server</a></section><div class="toolbar"><input class="search" id="search" placeholder="Search ${v.name} ${c.name.toLowerCase()}..." aria-label="Search posts"><span class="count" id="count"></span></div><section class="posts" id="posts"></section>`;const input=document.getElementById('search');input.addEventListener('input',()=>renderCards(category,server,input.value));renderCards(category,server,'');return}
+ if(bits.length===2){main.innerHTML=`<section class="server-banner ${v.theme}">${serverArt(server)}<div class="server-banner-content"><div class="eyebrow">${c.name} • AevonMC</div><div class="server-symbol">${v.icon}</div><h1>${v.name}</h1><p>${v.tagline}</p><a class="server-back" href="#/${category}">← Choose another server</a></div></section><div class="toolbar"><input class="search" id="search" placeholder="Search ${v.name} ${c.name.toLowerCase()}..." aria-label="Search posts"><span class="count" id="count"></span></div><section class="posts" id="posts"></section>`;const input=document.getElementById('search');input.addEventListener('input',()=>renderCards(category,server,input.value));renderCards(category,server,'');return}
  if(bits.length!==3){notFound();return}
  const post=posts.find(p=>p.category===category&&postServer(p)===server&&p.slug===bits[2]&&p.published===true);
  if(!post){notFound();return}

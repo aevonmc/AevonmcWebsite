@@ -94,3 +94,41 @@ body{background:#77c7f2 url("assets/realistic-clouds.webp") center center / cove
 /* Separate LifeSteal and Survival Economy collections */
 .topbar nav{overflow:visible}.nav-dropdown{position:relative;display:inline-flex;align-items:center}.nav-dropdown summary{cursor:pointer;list-style:none;user-select:none;padding:8px 10px;border-radius:12px}.nav-dropdown summary::-webkit-details-marker{display:none}.nav-dropdown summary:hover,.nav-dropdown[open] summary{background:rgba(255,255,255,.22)}.nav-menu{position:absolute;z-index:100;top:100%;left:0;min-width:185px;display:grid;gap:3px;padding:8px;border-radius:14px;background:rgba(31,77,115,.97);box-shadow:0 12px 30px #173a5655}.nav-menu a{display:block;white-space:nowrap;padding:9px 12px;color:#fff!important;border-radius:8px}.nav-menu a:hover{background:#ffffff33}
 .server-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin:25px auto 55px;max-width:960px}.server-choice{text-align:center;display:block;padding:40px 22px;border-radius:24px;color:#fff;text-decoration:none;box-shadow:0 12px 30px #153f5740;transition:transform .2s}.server-choice:hover{transform:translateY(-4px)}.server-choice h2{font-size:clamp(26px,4vw,42px);margin:10px 0}.server-choice p{margin:8px 0 22px}.server-choice-icon{font-size:42px}.server-choice.lifesteal,.server-banner.lifesteal{background:linear-gradient(130deg,#751a36,#c23848 55%,#e9755c)}.server-choice.economy,.server-banner.economy{background:linear-gradient(130deg,#146c64,#3b9e7c 55%,#8cc786)}.server-banner{margin:28px auto 32px;max-width:1000px;text-align:center;padding:44px 20px;border-radius:26px;color:#fff;box-shadow:0 12px 34px #153f5740}.server-banner h1{font-size:clamp(42px,7vw,80px);line-height:1.1;margin:8px 0}.server-banner .server-symbol{font-size:48px}.server-banner p{font-size:18px;margin:12px 0 24px}.server-back{color:#fff;text-decoration:underline}.post-server-label{font-weight:700;margin:15px 0;color:#a92d4a}.post-server-label.economy{color:#1d826b}@media(max-width:650px){.server-choices{grid-template-columns:1fr}.nav-menu{left:auto;right:0}.nav-dropdown summary{padding:6px}}
+
+
+/* Minecraft-inspired server category artwork: original CSS pixel blocks, no external assets. */
+.server-choice,.server-banner{position:relative;isolation:isolate;overflow:hidden;border:4px solid rgba(255,255,255,.35);text-shadow:0 2px 8px #0007}
+.server-choice{min-height:310px;display:flex;align-items:center;justify-content:center;padding:32px 18px}
+.server-choice-content,.server-banner-content{position:relative;z-index:2}
+.server-choice-content{width:100%}
+.server-choice.lifesteal,.server-banner.lifesteal{background:linear-gradient(155deg,#2a101c 0%,#752039 42%,#bf3248 75%,#eb7757 100%)}
+.server-choice.economy,.server-banner.economy{background:linear-gradient(155deg,#153b52 0%,#216e72 48%,#5b9c60 78%,#a2c66b 100%)}
+.server-choice h2,.server-banner h1{font-family:Fredoka,system-ui,sans-serif;letter-spacing:.01em;text-shadow:0 4px 0 #0005,0 9px 18px #0008}
+.server-choice-icon,.server-banner .server-symbol{display:inline-flex;align-items:center;justify-content:center;background:#0b182b88;border:3px solid #ffffff80;box-shadow:5px 5px 0 #0005;border-radius:10px;width:66px;height:66px;font-size:37px}
+.server-choice-action{display:inline-block;padding:9px 18px;border:2px solid #fff9;border-radius:9px;background:#071c2e99;font-weight:900;box-shadow:4px 4px 0 #0005}
+.server-choice:hover .server-choice-action{background:#fff;color:#203954;text-shadow:none}
+.server-banner{min-height:320px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:42px 20px}
+.server-banner .eyebrow{color:#fff;text-shadow:0 2px 5px #000a}
+.server-banner .server-back{display:inline-block;padding:8px 14px;border:2px solid #ffffff9c;border-radius:8px;background:#091d3099;text-decoration:none;font-weight:800}
+.mc-art{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:.95}
+.mc-art::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0008,transparent 58%),repeating-linear-gradient(0deg,transparent 0 19px,#ffffff09 19px 20px),repeating-linear-gradient(90deg,transparent 0 19px,#ffffff09 19px 20px)}
+.mc-sun{position:absolute;right:13%;top:12%;width:48px;height:48px;background:#ffe8a2;box-shadow:0 0 0 8px #ffe8a220,0 0 36px #fff4a277;image-rendering:pixelated;transform:rotate(0deg)}
+.mc-life .mc-sun{background:#ff566a;box-shadow:0 0 0 8px #ff566a20,0 0 45px #ff566a88}
+.mc-cloud{position:absolute;top:17%;left:8%;width:80px;height:18px;background:#fff7;box-shadow:18px -18px 0 #fff7,44px -18px 0 #fff7,66px 0 0 #fff7;opacity:.48}
+.mc-cloud-two{top:33%;left:auto;right:12%;transform:scale(.55);opacity:.3}
+.mc-hill{position:absolute;bottom:-12%;width:65%;height:43%;clip-path:polygon(0 100%,0 45%,14% 45%,14% 24%,30% 24%,30% 5%,50% 5%,50% 32%,68% 32%,68% 58%,100% 58%,100% 100%);background:linear-gradient(180deg,#263d4a,#0b1e2b)}
+.mc-hill-back{right:-8%;opacity:.52;transform:scale(1.3);transform-origin:bottom right}
+.mc-hill-front{left:-8%;bottom:-20%;opacity:.72}
+.mc-economy .mc-hill{background:linear-gradient(180deg,#79ba6c 0 17%,#476d42 17% 25%,#6b4d32 25% 100%)}
+.mc-life .mc-hill{background:linear-gradient(180deg,#9d4a51 0 14%,#4d2438 14% 28%,#27172a 28% 100%)}
+.mc-block{position:absolute;width:46px;height:46px;bottom:11%;background:#88613e;border-top:12px solid #6db85b;box-shadow:inset -9px 0 #0002,inset 7px 0 #fff2,5px 5px 0 #0005;transform:rotate(-9deg)}
+.mc-block-a{left:11%}.mc-block-b{right:13%;bottom:19%;transform:rotate(12deg) scale(.8)}.mc-block-c{right:28%;bottom:3%;transform:rotate(-5deg) scale(.6)}
+.mc-life .mc-block{background:#3b2036;border-top-color:#ba4c5b}
+.mc-spark{position:absolute;font-size:28px;color:#ffdf90;text-shadow:3px 3px 0 #0007;animation:mc-float 4s ease-in-out infinite}
+.mc-spark-one{left:20%;top:20%}.mc-spark-two{right:21%;top:42%;animation-delay:-2s;font-size:19px}
+.mc-life .mc-spark{color:#ff6577}
+.mc-emblem{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-12deg);font-size:clamp(120px,20vw,230px);font-family:Arial,sans-serif;font-weight:900;color:#ffffff13;text-shadow:9px 9px 0 #0001}
+.mc-economy .mc-emblem{color:#f6df731f}
+@keyframes mc-float{50%{translate:0 -10px}}
+@media(prefers-reduced-motion:reduce){.mc-spark{animation:none}}
+@media(max-width:650px){.server-choice{min-height:270px}.server-banner{min-height:290px}.mc-emblem{font-size:140px}.mc-sun{right:8%}}

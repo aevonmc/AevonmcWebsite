@@ -1,9 +1,8 @@
-AevonMC — Server Categories
+AevonMC Minecraft-themed server category design update
 
-Replace these 6 files in the repository root: index.html, admin.html, app.js, admin.js, styles.css, admin.css.
-Do NOT overwrite posts.json.
-
-Rules and Guides each have dropdowns for LifeSteal and Survival Economy. Admin posts now have a Server category selector.
-Existing posts without a server field are shown under Survival Economy for backward compatibility; edit them in Admin to move them to LifeSteal.
-
-After GitHub Pages deploys, hard refresh the site. Existing GitHub PAT permissions and rich editor remain unchanged.
+Replace ONLY app.js and styles.css in the repository root.
+Do not replace posts.json or any admin files.
+Commit to main and wait for GitHub Pages deployment, then hard refresh (Ctrl+Shift+R).
+LifeSteaL: crimson Nether-inspired pixel scenery and hearts.
+Survival Economy: green grass-block hills and gold/emerald-inspired shapes.
+No external images or assets are required.
