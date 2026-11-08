@@ -6,3 +6,14 @@ body{background:#77c7f2 url("assets/realistic-clouds.webp") center center / cove
 .brand{font-family:Fredoka,'Arial Rounded MT Bold',system-ui,sans-serif;font-size:clamp(29px,3vw,40px);font-weight:700;letter-spacing:-1.6px;-webkit-text-stroke:1.3px #245c9c;paint-order:stroke fill;color:#fff;text-shadow:0 3px 0 #387bc3,0 5px 0 #1a5191,0 7px 9px #2b75b77d}
 .brand .gold{color:#ffd45c;-webkit-text-stroke:1.1px #a96315;text-shadow:0 3px 0 #e19a25,0 5px 0 #ad6a18}
 @media(max-width:680px){body{background-attachment:scroll;background-position:center center}.brand{font-size:31px}}
+
+/* Header layout: logo icon at left, navigation precisely centered. */
+.topbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.topbar .brand{grid-column:1;justify-self:start}
+.topbar nav{grid-column:2;justify-self:center}
+@media(max-width:680px){
+  .topbar{display:flex;flex-direction:column;gap:12px}
+  .topbar .brand{align-self:center}
+  .topbar nav{width:100%;display:flex;flex-wrap:wrap;justify-content:center}
+  .topbar nav a{padding:9px 13px}
+}
