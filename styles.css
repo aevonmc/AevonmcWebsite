@@ -36,3 +36,8 @@ body{background:#77c7f2 url("assets/realistic-clouds.webp") center center / cove
 .hero-connect .copy-server:hover,.hero-connect .join-discord:hover{opacity:.75}
 .hero-connect .join-discord:focus-visible,.hero-connect .copy-server:focus-visible{outline:2px solid #215e98;outline-offset:3px;border-radius:4px}
 @media(max-width:480px){.hero-connect .connect-card{min-height:130px;padding:8px 2px}.hero-connect .live-count{font-size:13px}}
+
+/* Homepage server and Discord: text-only, no cards or icons. */
+.hero-connect .connect-card, .hero-connect .server-card, .hero-connect .discord-card,
+.hero-connect .connect-card:hover {background:transparent!important;background-image:none!important;border:0!important;outline:0!important;box-shadow:none!important;border-radius:0!important;transform:none!important;}
+.hero-connect .connect-icon{display:none!important;}
