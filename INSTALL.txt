@@ -1,1 +1,5 @@
-Replace only styles.css and index.html in your GitHub Pages repository. This adjusts only spacing between the Economy Rules/Guides eyebrow label and diamond emblem. Keep app.js and all other files unchanged.
+AevonMC — Remove Choose another server from Economy SMP Rules and Guides
+
+Replace app.js and index.html in your GitHub repository root.
+styles.css is unchanged from the latest Economy spacing update and is not required.
+Existing posts.json, admin, homepage, and theme assets remain untouched.
