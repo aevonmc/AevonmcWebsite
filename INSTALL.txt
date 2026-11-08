@@ -1,5 +1,5 @@
-AevonMC dropdown fix
+AevonMC themed backgrounds + readable dropdown fix
 
-Upload index.html, styles.css, and NEW dropdown.js to the repository root. Commit to main. Wait for Pages deployment, then hard-refresh (Ctrl+Shift+R).
+Upload index.html, app.js, and styles.css to the root of your GitHub Pages repository. Keep dropdown.js, admin files, posts.json, and assets unchanged. Commit to main, wait for deployment, then hard-refresh.
 
-Fixes: menu stacking over Minecraft-themed banners, smooth drop-in, 500ms pointer-leave close, outside-click close, Escape close, close on selection. No other files changed.
+Rules/Guides -> LifeSteal: crimson battlefield atmosphere. Rules/Guides -> Survival Economy: emerald/gold economy atmosphere. Homepage and category selection retain existing cloud background. Dropdown options are white on opaque backgrounds. Existing dropdown.js keeps 500ms hover-out and outside-click closing.

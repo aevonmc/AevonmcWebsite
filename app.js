@@ -78,6 +78,10 @@ function serverArt(server){
 function route(){
  let path;try{path=decodeURIComponent(location.hash.slice(1)||'/').replace(/\/+$/,'')||'/'}catch{notFound();return}
  const bits=path.split('/').filter(Boolean),category=bits[0];
+ const world=(bits[0]==='rules'||bits[0]==='guides')?bits[1]:null;
+ document.body.classList.toggle('world-lifesteal',world==='lifesteal');
+ document.body.classList.toggle('world-economy',world==='survival-economy');
+
  document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===(category||'home')));
  document.title='AevonMC • Rules & Guides';
  if(!bits.length){main.innerHTML=`<section class="hero"><div class="eyebrow">Welcome to the skies</div><div class="hero-connect"><div class="connect-card server-card"><span class="live-count" id="minecraft-online" aria-live="polite">Checking players…</span><strong>aevonsmp.online</strong><button class="copy-server" type="button" data-copy-ip="aevonsmp.online" aria-label="Copy Minecraft server IP">Copy IP?</button></div><h1>Aevon<span>MC</span></h1><div class="connect-card discord-card"><span class="live-count" id="discord-online" aria-live="polite">Checking members…</span><strong>Discord Server</strong><a class="join-discord" href="https://discord.gg/Ad7JVWw5Jp" target="_blank" rel="noopener noreferrer">Click to Join?</a></div></div><p>Explore our server rules and helpful guides. Your next adventure starts here, above the clouds!</p></section><section class="home-grid">${Object.entries(categories).map(([id,c])=>`<a class="category-card" href="#/${id}"><span class="category-icon">${c.icon}</span><div><h2>${c.name}</h2><p>${c.desc}</p></div><span class="arrow">➜</span></a>`).join('')}</section>`;refreshLiveCounts();return}

@@ -151,3 +151,40 @@ body{background:#77c7f2 url("assets/realistic-clouds.webp") center center / cove
 .app main{position:relative;z-index:0}
 @media(max-width:650px){.topbar .nav-menu{left:50%;right:auto;transform-origin:top center;translate:-50% 0;min-width:175px}}
 @media(prefers-reduced-motion:reduce){.topbar .nav-dropdown[open] .nav-menu{animation:none}.topbar .nav-menu a{transition:none}}
+
+
+/* Dropdown contrast and readable labels */
+.topbar .nav-dropdown .nav-menu{z-index:5000!important;background:#183b5b!important;border:2px solid #e2f2ff;min-width:215px;box-shadow:0 16px 40px #102439aa;opacity:1!important;visibility:visible!important}
+.topbar .nav-dropdown .nav-menu a{display:block!important;background:#285b7d!important;color:#fff!important;-webkit-text-fill-color:#fff!important;font:700 15px/1.35 Nunito,Arial,sans-serif!important;text-shadow:none!important;opacity:1!important;visibility:visible!important;padding:12px 15px!important;border-radius:9px!important;border:1px solid #ffffff40!important;box-shadow:none!important;white-space:normal!important}
+.topbar .nav-dropdown .nav-menu a:hover,.topbar .nav-dropdown .nav-menu a:focus-visible{background:#3b83ad!important;outline:2px solid white}
+.topbar .nav-dropdown[open]{z-index:4000!important}
+/* Route-dependent Minecraft inspired atmosphere */
+body.world-lifesteal{background:#260e1e!important;background-image:radial-gradient(ellipse at 75% 20%,#d13e5b88,transparent 38%),linear-gradient(155deg,#180e1c,#591a32 53%,#25101e)!important}
+body.world-economy{background:#286e60!important;background-image:radial-gradient(ellipse at 80% 15%,#f7e5a188,transparent 38%),linear-gradient(155deg,#164b63,#428e69 60%,#8fb778)!important}
+body.world-lifesteal .sky{z-index:0;background:repeating-linear-gradient(90deg,transparent 0 79px,#f55b7409 79px 80px),linear-gradient(#200e2033,#681f4033)}
+body.world-economy .sky{z-index:0;background:repeating-linear-gradient(90deg,transparent 0 79px,#ffecaa12 79px 80px),linear-gradient(#0c555533,#b6d48c33)}
+body.world-lifesteal .sun{background:#fa435a;box-shadow:0 0 120px 65px #d32b4d99;opacity:.6}
+body.world-economy .sun{background:#ffe6a5;box-shadow:0 0 120px 65px #f9d77699;opacity:.65}
+body.world-lifesteal .cloud{background:#632d4670;box-shadow:65px -32px 0 14px #632d4670,145px -15px 0 3px #632d4670,95px 15px 0 10px #632d4670}
+body.world-economy .cloud{background:#edffe477;box-shadow:65px -32px 0 14px #edffe477,145px -15px 0 3px #edffe477,95px 15px 0 10px #edffe477}
+body.world-lifesteal .particle{color:#ff697e;text-shadow:0 0 12px #ff315a}
+body.world-economy .particle{color:#ffe9a2;text-shadow:0 0 12px #ffe9a2}
+body.world-lifesteal .topbar{background:#28182ee0;border-color:#b55d76}
+body.world-economy .topbar{background:#e2f5e1e5;border-color:#f8e7ac}
+body.world-lifesteal .topbar nav>a{background:#592b43;color:#fff;border-color:#b76b83}
+body.world-lifesteal .nav-dropdown summary{color:#ffe5ed}
+body.world-lifesteal .topbar .nav-dropdown .nav-menu{background:#37172c!important;border-color:#d58098}
+body.world-lifesteal .topbar .nav-dropdown .nav-menu a{background:#6b2a48!important}
+body.world-lifesteal .topbar .nav-dropdown .nav-menu a:hover{background:#a13d61!important}
+body.world-economy .topbar .nav-dropdown .nav-menu{background:#1a5549!important;border-color:#b8dca9}
+body.world-economy .topbar .nav-dropdown .nav-menu a{background:#28725e!important}
+body.world-economy .topbar .nav-dropdown .nav-menu a:hover{background:#399879!important}
+body.world-lifesteal .server-banner{border-color:#ef9aab;box-shadow:0 0 0 5px #591c3b,0 25px 55px #0007}
+body.world-economy .server-banner{border-color:#f4e6b1;box-shadow:0 0 0 5px #40886a,0 25px 55px #143d3b66}
+body.world-lifesteal .post-card,body.world-lifesteal .article,body.world-lifesteal .empty{border-color:#edb5c5;box-shadow:0 9px 0 #7d3050,0 20px 35px #0005}
+body.world-economy .post-card,body.world-economy .article,body.world-economy .empty{border-color:#f1e6b5;box-shadow:0 9px 0 #589a7c,0 20px 35px #0b3b3655}
+body.world-lifesteal footer,body.world-lifesteal .count{color:#ffe6eb}
+body.world-economy footer,body.world-economy .count{color:#f4ffe6}
+body.world-lifesteal .server-banner .mc-spark{animation-duration:2.5s}
+body.world-economy .server-banner .mc-spark{animation-duration:5s}
+@media(max-width:650px){.topbar .nav-dropdown .nav-menu{min-width:185px}}
