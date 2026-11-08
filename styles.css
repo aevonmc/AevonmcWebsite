@@ -518,3 +518,10 @@ html body:not(.world-lifesteal):not(.world-economy) main#main section.hero > p.h
 /* Economy SMP: add breathing room between the RULES/GUIDES eyebrow and diamond emblem. */
 body.world-economy .server-banner .server-banner-content > .eyebrow {display:block; margin-bottom:22px;}
 @media (max-width:650px) {body.world-economy .server-banner .server-banner-content > .eyebrow {margin-bottom:16px;}}
+
+/* Mobile-only: hide the header bird logo; preserve desktop branding. */
+@media screen and (max-width: 680px) {
+  .topbar > a.brand { display: none !important; }
+  .topbar { justify-content: center; }
+  .topbar > nav { margin-inline: auto; }
+}
