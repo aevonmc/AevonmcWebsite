@@ -348,3 +348,17 @@ body.world-lifesteal .lifesteal-coming-soon h1{
   font-size:clamp(64px,10vw,120px);line-height:1.12;margin:0;
   color:#c8cbd2;text-shadow:none;letter-spacing:.01em;
 }
+
+/* Explicit large gray Coming Soon title, only on LifeSteaL Rules / Guides. */
+html body.world-lifesteal #main .lifesteal-coming-soon h1 {
+  font-family: Fredoka, system-ui, sans-serif !important;
+  font-size: clamp(72px, 11vw, 140px) !important;
+  font-weight: 800 !important;
+  line-height: 1.08 !important;
+  color: #c8cbd2 !important;
+  text-shadow: none !important;
+  background: none !important;
+  -webkit-text-fill-color: #c8cbd2 !important;
+  letter-spacing: 0 !important;
+}
+@media(max-width:600px){html body.world-lifesteal #main .lifesteal-coming-soon h1{font-size:clamp(56px,13vw,86px)!important}}

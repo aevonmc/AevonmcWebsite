@@ -1,1 +1,1 @@
-Replace only styles.css in your GitHub Pages repository. This increases the LifeSteaL Coming Soon heading size and changes it to a soft gray. All other files remain unchanged.
+Replace index.html and styles.css in the GitHub Pages repository root. Both files are required: index.html updates the stylesheet URL to prevent cached CSS. Do not replace app.js, posts.json, or any admin files. This change affects only the LifeSteaL Coming Soon title.
