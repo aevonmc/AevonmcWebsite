@@ -1,0 +1,8 @@
+AevonMC Publish Fix
+
+Replace admin.html, admin.js and app.js in your repository root.
+In the admin editor choose Rules or Guides and click Publish.
+Posts are always saved with published:true.
+Wait for the GitHub Pages deployment to finish; hard refresh the public page.
+Do not upload the ZIP itself.
+If you use a different GitHub Pages publishing branch or folder, ensure it serves the same posts.json file.
