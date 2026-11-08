@@ -1,7 +1,9 @@
-AevonMC screenshot auto-fit update
+AevonMC — Server Categories
 
-Replace styles.css, admin.css, index.html, and admin.html in the repository root.
-Keep app.js, admin.js, posts.json and all other files unchanged.
-Commit to main, wait for GitHub Pages deployment, and hard-refresh the site.
+Replace these 6 files in the repository root: index.html, admin.html, app.js, admin.js, styles.css, admin.css.
+Do NOT overwrite posts.json.
 
-Images preserve their aspect ratio and shrink to fit the content column. Large screenshots are capped to a viewport-relative height without cropping. Applies to the editor and public Rules/Guides posts.
+Rules and Guides each have dropdowns for LifeSteal and Survival Economy. Admin posts now have a Server category selector.
+Existing posts without a server field are shown under Survival Economy for backward compatibility; edit them in Admin to move them to LifeSteal.
+
+After GitHub Pages deploys, hard refresh the site. Existing GitHub PAT permissions and rich editor remain unchanged.
