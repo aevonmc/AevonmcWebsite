@@ -1,8 +1,5 @@
-AevonMC Minecraft-themed server category design update
+AevonMC dropdown fix
 
-Replace ONLY app.js and styles.css in the repository root.
-Do not replace posts.json or any admin files.
-Commit to main and wait for GitHub Pages deployment, then hard refresh (Ctrl+Shift+R).
-LifeSteaL: crimson Nether-inspired pixel scenery and hearts.
-Survival Economy: green grass-block hills and gold/emerald-inspired shapes.
-No external images or assets are required.
+Upload index.html, styles.css, and NEW dropdown.js to the repository root. Commit to main. Wait for Pages deployment, then hard-refresh (Ctrl+Shift+R).
+
+Fixes: menu stacking over Minecraft-themed banners, smooth drop-in, 500ms pointer-leave close, outside-click close, Escape close, close on selection. No other files changed.

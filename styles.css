@@ -132,3 +132,22 @@ body{background:#77c7f2 url("assets/realistic-clouds.webp") center center / cove
 @keyframes mc-float{50%{translate:0 -10px}}
 @media(prefers-reduced-motion:reduce){.mc-spark{animation:none}}
 @media(max-width:650px){.server-choice{min-height:270px}.server-banner{min-height:290px}.mc-emblem{font-size:140px}.mc-sun{right:8%}}
+
+
+/* Dropdown overlay fix: menu must float ABOVE Minecraft-themed banners. */
+.app{isolation:isolate;overflow:visible}
+.topbar{position:relative;z-index:1000;overflow:visible!important;isolation:isolate}
+.topbar nav{position:relative;z-index:1001;overflow:visible!important}
+.topbar .nav-dropdown{position:relative;z-index:1002;overflow:visible!important}
+.topbar .nav-dropdown[open]{z-index:1003}
+.topbar .nav-menu{position:absolute;z-index:1100;top:calc(100% + 9px);left:0;display:grid;min-width:195px;overflow:visible;transform-origin:top center;will-change:transform,opacity;box-shadow:0 15px 35px rgba(16,43,80,.32)}
+.topbar .nav-dropdown[open] .nav-menu{animation:aevonMenuIn .24s cubic-bezier(.2,.85,.25,1) both}
+@keyframes aevonMenuIn{from{opacity:0;transform:translateY(-9px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.topbar .nav-dropdown summary{outline-offset:4px}
+.topbar .nav-dropdown summary:focus-visible{outline:2px solid #225c98}
+.topbar .nav-menu a{transition:background .15s ease,transform .15s ease}
+.topbar .nav-menu a:hover{transform:translateX(3px)}
+/* Keep themed content behind the navigation dropdown. */
+.app main{position:relative;z-index:0}
+@media(max-width:650px){.topbar .nav-menu{left:50%;right:auto;transform-origin:top center;translate:-50% 0;min-width:175px}}
+@media(prefers-reduced-motion:reduce){.topbar .nav-dropdown[open] .nav-menu{animation:none}.topbar .nav-menu a{transition:none}}
