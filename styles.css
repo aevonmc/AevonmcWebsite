@@ -306,3 +306,34 @@ body:not(.world-lifesteal):not(.world-economy){
 .cloud,.particle,#particles{display:none!important;animation:none!important;}
 body:not(.world-lifesteal):not(.world-economy) .sky{background:none!important;}
 body:not(.world-lifesteal):not(.world-economy) .sun{display:none!important;}
+
+/* Targeted refinement: horizontal clouds only on the two server themes. */
+.cloud,.particle,#particles{display:none!important;}
+body.world-lifesteal .sky .cloud,
+body.world-economy .sky .cloud{
+  display:block!important;
+  animation-name:drift!important;
+  animation-timing-function:linear!important;
+  animation-iteration-count:infinite!important;
+  pointer-events:none;
+  will-change:translate;
+}
+body.world-lifesteal .sky .cloud-a,body.world-economy .sky .cloud-a{animation-duration:53s!important;}
+body.world-lifesteal .sky .cloud-b,body.world-economy .sky .cloud-b{animation-duration:71s!important;}
+body.world-lifesteal .sky .cloud-c,body.world-economy .sky .cloud-c{animation-duration:62s!important;}
+body.world-lifesteal .sky .cloud-d,body.world-economy .sky .cloud-d{animation-duration:39s!important;}
+/* Clear sky-blue controls on the homepage; geometry and theme controls unchanged. */
+body:not(.world-lifesteal):not(.world-economy) .topbar nav{
+  --nav-bg:#a7d9ff;
+  --nav-hover:#8ccaff;
+  --nav-text:#164a7d;
+  --nav-border:#559dd6;
+  --nav-depth:#478ac1;
+  --nav-menu-bg:#c5e9ff;
+}
+body:not(.world-lifesteal):not(.world-economy) .topbar .nav-dropdown .nav-menu{
+  border-color:#559dd6!important;
+}
+@media(prefers-reduced-motion:reduce){
+ body.world-lifesteal .sky .cloud,body.world-economy .sky .cloud{animation:none!important;will-change:auto;}
+}
