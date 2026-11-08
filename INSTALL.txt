@@ -1,1 +1,11 @@
-AevonMC Instant Visual Formatting Editor\n\nReplace admin.html, admin.js, admin.css and app.js in your repository root.\nDo not replace posts.json. Commit, wait for Pages deployment, and hard-refresh admin.html and public site.\nSelect text inside the new visual editor, click Bold/Italic/Underline or apply font/size/color; changes appear immediately. Publish or Apply Changes to save. Existing Markdown posts are converted to rich HTML when edited and saved.\n
+AevonMC live Rules/Guides sync + icon-only navbar
+
+Replace these five files in the repository root:
+index.html, admin.html, app.js, admin.js, admin.css
+
+Do NOT replace posts.json or your assets. Commit to main and wait for this one code deployment.
+After installation, post updates are read from the public GitHub main branch without waiting for subsequent GitHub Pages builds. The public page checks every 15 seconds when visible, on navigation, and when returning to the tab. Another open tab in the same browser receives a storage notification.
+
+GitHub must first accept each save/delete. GitHub raw content may be briefly cached; changes cannot be guaranteed instantaneous for every visitor. If the raw endpoint is unavailable, the site falls back to the deployed posts.json.
+
+Keep your fine-grained token private.

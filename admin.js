@@ -46,6 +46,8 @@ async function applyMutation(change,message){
   const check=await latestPosts();
   if(check.remoteSha!==data.content.sha)throw Error('Another update occurred immediately after saving. Refresh and verify.');
   posts=check.current;sha=check.remoteSha;render();$('editor').hidden=true;
+  // Notify public pages already open in another tab of this browser.
+  try{localStorage.setItem('aevonmc-public-posts-updated',JSON.stringify({posts,at:Date.now()}))}catch{}
   status('Changes applied on GitHub. The public site updates after GitHub Pages deploys (usually within a few minutes).','ok');
   return true;
  }catch(err){status('Changes NOT applied: '+errorMessage(err)+'. Please retry or refresh.','error');return false}
