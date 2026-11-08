@@ -1,1 +1,1 @@
-Replace only styles.css and index.html in your GitHub repository. Based on the latest three-card Overview update. Keep app.js, assets, posts.json, and admin files unchanged.
+Replace styles.css and index.html only. Keep app.js, posts.json, and all other files unchanged.

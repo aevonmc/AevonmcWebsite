@@ -365,3 +365,27 @@ html body.world-lifesteal main#main section.lifesteal-coming-soon > h1 {
   letter-spacing:.01em !important;
 }
 @media(max-width:600px){html body.world-lifesteal main#main section.lifesteal-coming-soon > h1{font-size:clamp(56px,13vw,86px)!important}}
+
+/* Center the LifeSteaL temporary-unavailability heading in the visible page area. */
+html body.world-lifesteal .app > main#main:has(> .lifesteal-coming-soon) {
+  display:flex !important;
+  flex-direction:column;
+  align-items:center !important;
+  justify-content:center !important;
+  width:100%;
+  min-height:calc(100dvh - 205px);
+}
+html body.world-lifesteal main#main > .lifesteal-coming-soon {
+  width:100%;
+  min-height:0 !important;
+  margin:auto 0 !important;
+  padding:20px 0 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  background:none !important;
+  box-shadow:none !important;
+  border:0 !important;
+}
+@media(max-width:680px){html body.world-lifesteal .app > main#main:has(> .lifesteal-coming-soon){min-height:calc(100dvh - 250px)}}
