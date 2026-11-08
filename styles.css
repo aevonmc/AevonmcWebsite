@@ -41,3 +41,13 @@ body{background:#77c7f2 url("assets/realistic-clouds.webp") center center / cove
 .hero-connect .connect-card, .hero-connect .server-card, .hero-connect .discord-card,
 .hero-connect .connect-card:hover {background:transparent!important;background-image:none!important;border:0!important;outline:0!important;box-shadow:none!important;border-radius:0!important;transform:none!important;}
 .hero-connect .connect-icon{display:none!important;}
+
+/* Compact, plain-text server and Discord details with green live online counts. */
+.hero-connect .connect-card{gap:2px!important;min-height:0!important;padding:2px 4px!important;line-height:1.2}
+.hero-connect .connect-label{line-height:1.2}
+.hero-connect .connect-card strong{line-height:1.2}
+.hero-connect .live-count{color:#16833b!important;line-height:1.2;min-height:0!important;margin:1px 0;font-weight:800;text-shadow:0 1px 0 rgba(255,255,255,.65)}
+.hero-connect .live-count.status-unavailable{color:#6b7280!important}
+.hero-connect .live-count.status-offline{color:#b42318!important}
+.hero-connect .copy-server,.hero-connect .join-discord{margin-top:1px;padding:2px 5px!important;line-height:1.2}
+@media(max-width:480px){.hero-connect .connect-card{gap:2px!important;min-height:0!important;padding:2px!important}}

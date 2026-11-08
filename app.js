@@ -17,12 +17,12 @@ async function refreshLiveCounts(){
  if(!minecraft&&!discord)return;
  if(minecraft){fetchJsonWithTimeout('https://api.mcstatus.io/v2/status/java/aevonsmp.online')
  .then(data=>{if(!minecraft.isConnected)return;const online=data?.players?.online,max=data?.players?.max;
- minecraft.textContent=data?.online&&Number.isFinite(online)&&Number.isFinite(max)?`Online ${online}/${max}`:data?.online===false?'Server Offline':'Player count unavailable'})
- .catch(()=>{if(minecraft.isConnected)minecraft.textContent='Player count unavailable'})}
+ minecraft.textContent=data?.online&&Number.isFinite(online)&&Number.isFinite(max)?`Online ${online}/${max}`:data?.online===false?'Server Offline':'Player count unavailable';minecraft.classList.toggle('status-offline',data?.online===false);minecraft.classList.toggle('status-unavailable',data?.online!==false&&!(data?.online&&Number.isFinite(online)&&Number.isFinite(max)))})
+ .catch(()=>{if(minecraft.isConnected){minecraft.textContent='Player count unavailable';minecraft.classList.add('status-unavailable');minecraft.classList.remove('status-offline')}})}
  if(discord){fetchJsonWithTimeout('https://discord.com/api/v10/invites/Ad7JVWw5Jp?with_counts=true')
  .then(data=>{if(!discord.isConnected)return;const count=data?.approximate_presence_count;
- discord.textContent=Number.isFinite(count)?`${count} People Online`:'Online count unavailable'})
- .catch(()=>{if(discord.isConnected)discord.textContent='Online count unavailable'})}
+ discord.textContent=Number.isFinite(count)?`${count} People Online`:'Online count unavailable';discord.classList.toggle('status-unavailable',!Number.isFinite(count))})
+ .catch(()=>{if(discord.isConnected){discord.textContent='Online count unavailable';discord.classList.add('status-unavailable')}})}
  if(statusTimer)clearTimeout(statusTimer);
  statusTimer=setTimeout(()=>{if(document.getElementById('minecraft-online'))refreshLiveCounts()},60000);
 }
