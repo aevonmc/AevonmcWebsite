@@ -191,3 +191,107 @@ body.world-economy .server-banner .mc-spark{animation-duration:5s}
 
 /* Repository-sync warning: visible instead of silently displaying stale posts. */
 #content-sync-notice:not([hidden]){position:relative;z-index:5;max-width:1100px;margin:12px auto;padding:13px 18px;border:2px solid #dca455;border-radius:12px;background:#fff4d8;color:#603c1c;font-weight:700;box-shadow:0 4px 15px #0002}
+
+/* Navigation-only update: four matching smooth buttons in every server theme. */
+.topbar nav {align-items:center;gap:10px;}
+.topbar nav > a, .topbar nav > .nav-dropdown > summary {
+  box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;
+  min-height:46px;padding:10px 20px;margin:0;
+  font:700 16px/1.25 Fredoka,system-ui,sans-serif;letter-spacing:0;
+  color:#254c83!important;-webkit-text-fill-color:#254c83!important;
+  background:#f6fbff!important;border:2px solid #fff!important;border-radius:999px!important;
+  box-shadow:0 4px 0 #9ac3f0!important;text-shadow:none!important;
+  transform:none;transition:background-color .2s ease,box-shadow .2s ease,transform .2s ease,color .2s ease!important;
+  cursor:pointer;white-space:nowrap;
+}
+.topbar nav > a:hover,.topbar nav > .nav-dropdown > summary:hover,
+.topbar nav > .nav-dropdown[open] > summary {
+  background:#e4f3ff!important;transform:translateY(-2px);box-shadow:0 6px 0 #9ac3f0!important;
+}
+.topbar nav > a:active,.topbar nav > .nav-dropdown > summary:active {
+  transform:translateY(3px);box-shadow:0 1px 0 #9ac3f0!important;
+}
+.topbar nav > a.active {background:#d8ecff!important;color:#254c83!important;-webkit-text-fill-color:#254c83!important;}
+.topbar nav > a:focus-visible,.topbar nav > .nav-dropdown > summary:focus-visible {outline:3px solid #367fc7;outline-offset:3px;}
+.topbar .nav-dropdown .nav-menu {background:#f6fbff!important;border:2px solid white!important;border-radius:17px!important;box-shadow:0 8px 24px #153d6533!important;padding:8px!important;}
+.topbar .nav-dropdown .nav-menu a {
+  background:#e4f3ff!important;color:#254c83!important;-webkit-text-fill-color:#254c83!important;
+  border:0!important;border-radius:11px!important;font:700 15px/1.4 Fredoka,system-ui,sans-serif!important;
+  padding:12px 15px!important;text-align:left;transition:background-color .2s ease!important;
+}
+.topbar .nav-dropdown .nav-menu a:hover,.topbar .nav-dropdown .nav-menu a:focus-visible {background:#cce6ff!important;transform:none!important;outline:none;}
+@media(max-width:680px){.topbar nav{gap:7px}.topbar nav > a,.topbar nav > .nav-dropdown > summary{min-height:40px;padding:8px 12px;font-size:14px}}
+@media(max-width:390px){.topbar nav{gap:4px}.topbar nav > a,.topbar nav > .nav-dropdown > summary{padding:8px 9px;font-size:13px}}
+
+/* Navigation refinement: identical dimensions and geometry; only theme palette changes. */
+.topbar nav{
+  --nav-bg:#f6fbff;--nav-hover:#e4f3ff;--nav-text:#254c83;
+  --nav-border:#ffffff;--nav-depth:#9ac3f0;--nav-menu-bg:#edf7ff;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+body.world-lifesteal .topbar nav{
+  --nav-bg:#71344f;--nav-hover:#87415f;--nav-text:#fff1f5;
+  --nav-border:#b87891;--nav-depth:#411e32;--nav-menu-bg:#4a2539;
+}
+body.world-economy .topbar nav{
+  --nav-bg:#2d7664;--nav-hover:#398b74;--nav-text:#f2fff4;
+  --nav-border:#8bc8ac;--nav-depth:#1a5046;--nav-menu-bg:#205d50;
+}
+.topbar nav > a,.topbar nav > .nav-dropdown,
+.topbar nav > .nav-dropdown > summary {box-sizing:border-box;flex:0 0 116px;width:116px;max-width:116px;}
+.topbar nav > .nav-dropdown{display:inline-flex;align-items:stretch;justify-content:stretch;}
+.topbar nav > a,.topbar nav > .nav-dropdown > summary{
+  height:46px;min-height:46px;padding:0 6px!important;
+  display:flex;align-items:center;justify-content:center;
+  font:700 16px/1 Fredoka,system-ui,sans-serif!important;
+  color:var(--nav-text)!important;-webkit-text-fill-color:var(--nav-text)!important;
+  background:var(--nav-bg)!important;border:2px solid var(--nav-border)!important;
+  border-radius:999px!important;box-shadow:0 4px 0 var(--nav-depth)!important;
+  text-shadow:none!important;white-space:nowrap;transform:none;
+  transition:background-color .18s ease,transform .18s ease,box-shadow .18s ease!important;
+}
+.topbar nav > a:hover,.topbar nav > .nav-dropdown > summary:hover,
+.topbar nav > .nav-dropdown[open] > summary{
+  background:var(--nav-hover)!important;transform:translateY(-1px);
+  box-shadow:0 5px 0 var(--nav-depth)!important;
+}
+.topbar nav > a:active,.topbar nav > .nav-dropdown > summary:active{
+  transform:translateY(3px);box-shadow:0 1px 0 var(--nav-depth)!important;
+}
+.topbar nav > a.active{
+  background:var(--nav-bg)!important;color:var(--nav-text)!important;
+  -webkit-text-fill-color:var(--nav-text)!important;
+}
+.topbar .nav-dropdown .nav-menu{
+  background:var(--nav-menu-bg)!important;border:2px solid var(--nav-border)!important;
+  box-shadow:0 8px 20px #142c4540!important;
+}
+.topbar .nav-dropdown .nav-menu a,
+body.world-lifesteal .topbar .nav-dropdown .nav-menu a,
+body.world-economy .topbar .nav-dropdown .nav-menu a{
+  background:var(--nav-bg)!important;color:var(--nav-text)!important;
+  -webkit-text-fill-color:var(--nav-text)!important;
+  border:1px solid var(--nav-border)!important;border-radius:12px!important;
+  box-shadow:none!important;text-align:center!important;
+}
+.topbar .nav-dropdown .nav-menu a:hover,
+body.world-lifesteal .topbar .nav-dropdown .nav-menu a:hover,
+body.world-economy .topbar .nav-dropdown .nav-menu a:hover{
+  background:var(--nav-hover)!important;
+}
+@media(max-width:680px){
+  .topbar nav{gap:6px;flex-wrap:nowrap;max-width:100%;}
+  .topbar nav > a,.topbar nav > .nav-dropdown,
+  .topbar nav > .nav-dropdown > summary{
+    flex:0 1 96px;width:96px;max-width:96px;min-width:0;
+  }
+  .topbar nav > a,.topbar nav > .nav-dropdown > summary{
+    height:42px;min-height:42px;font-size:14px!important;padding:0 3px!important;
+  }
+}
+@media(max-width:410px){
+  .topbar nav{gap:4px;}
+  .topbar nav > a,.topbar nav > .nav-dropdown,
+  .topbar nav > .nav-dropdown > summary{flex:1 1 0;width:auto;max-width:none;}
+  .topbar nav > a,.topbar nav > .nav-dropdown > summary{font-size:12px!important;padding:0 2px!important;}
+}
