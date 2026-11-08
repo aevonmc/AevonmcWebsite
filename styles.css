@@ -51,3 +51,10 @@ body{background:#77c7f2 url("assets/realistic-clouds.webp") center center / cove
 .hero-connect .live-count.status-offline{color:#b42318!important}
 .hero-connect .copy-server,.hero-connect .join-discord{margin-top:1px;padding:2px 5px!important;line-height:1.2}
 @media(max-width:480px){.hero-connect .connect-card{gap:2px!important;min-height:0!important;padding:2px!important}}
+
+/* Tight vertical stacking: no blank lines between homepage connection texts. */
+.hero-connect .connect-card{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:0!important;row-gap:0!important;min-height:0!important;padding:0 4px!important;line-height:1.05!important}
+.hero-connect .connect-card > *{margin-top:0!important;margin-bottom:0!important;line-height:1.05!important}
+.hero-connect .connect-label,.hero-connect .connect-card strong,.hero-connect .live-count{display:block!important;min-height:0!important;padding-top:0!important;padding-bottom:0!important}
+.hero-connect .copy-server,.hero-connect .join-discord{margin:0!important;padding:0 3px!important;line-height:1.05!important}
+@media(max-width:480px){.hero-connect .connect-card{gap:0!important;padding:0 2px!important}}
