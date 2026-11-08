@@ -1,1 +1,1 @@
-Replace styles.css and index.html only. Keep app.js, posts.json, and all other files unchanged.
+Replace styles.css and index.html in the GitHub repository root. Do not replace app.js, posts.json, admin files, or assets. This changes only the homepage AevonMC title styling.
