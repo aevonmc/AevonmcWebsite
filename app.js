@@ -102,7 +102,7 @@ function renderCards(cat,server,query){
  count.textContent=filtered.length+' post'+(filtered.length===1?'':'s');
  list.innerHTML=filtered.length?filtered.map(p=>`<a class="post-card" href="#/${cat}/${server}/${encodeURIComponent(p.slug)}"><span class="icon">${categories[cat].icon}</span><h2>${esc(p.title)}</h2><p>${esc(p.description||'')}</p><span class="tag">${serverCategories[server].name}</span><span class="read">Read article →</span></a>`).join(''):'<div class="empty">☁ No posts in this server category yet.</div>';
 }
-function notFound(){main.innerHTML='<div class="empty" style="margin-top:100px"><h2>☁ Lost in the clouds?</h2><p>This page could not be found.</p><a class="button" href="#/">Return home</a></div>'}function particles(){let root=document.getElementById('particles');for(let i=0;i<23;i++){let e=document.createElement('span');e.className='particle';e.textContent=i%4===0?'✦':'☁';e.style.left=(i*47.13%100)+'%';e.style.top='-15%';e.style.fontSize=(9+i%5*4)+'px';e.style.animationDuration=(15+i%9*3)+'s';e.style.animationDelay=(-i*2.9)+'s';root.append(e)}}// Read committed content directly from GitHub, bypassing GitHub Pages deployment lag.
+function notFound(){main.innerHTML='<div class="empty" style="margin-top:100px"><h2>☁ Lost in the clouds?</h2><p>This page could not be found.</p><a class="button" href="#/">Return home</a></div>'}// Read committed content directly from GitHub, bypassing GitHub Pages deployment lag.
 // The public repository is readable without credentials. Never expose admin tokens here.
 const LIVE_POSTS_URL='https://raw.githubusercontent.com/aevonmc/AevonmcWebsite/main/posts.json';
 const API_POSTS_URL='https://api.github.com/repos/aevonmc/AevonmcWebsite/contents/posts.json?ref=main';
@@ -154,7 +154,7 @@ async function refreshPosts(){
  return postsRequest;
 }
 async function init(){
- document.getElementById('year').textContent=new Date().getFullYear();particles();
+ document.getElementById('year').textContent=new Date().getFullYear();
  try{posts=await getFreshPosts();lastPostsCheck=Date.now();contentNotice('')}
  catch(err){console.error('Could not load posts:',err);main.innerHTML='<div class="empty">Could not load posts. Please refresh the page.</div>';return}
  window.addEventListener('hashchange',()=>{route();refreshPosts();scrollTo(0,0)});

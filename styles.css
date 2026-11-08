@@ -295,3 +295,14 @@ body.world-economy .topbar .nav-dropdown .nav-menu a:hover{
   .topbar nav > .nav-dropdown > summary{flex:1 1 0;width:auto;max-width:none;}
   .topbar nav > a,.topbar nav > .nav-dropdown > summary{font-size:12px!important;padding:0 2px!important;}
 }
+
+/* Sky cleanup: keep the established layouts, navigation, and server-specific palettes. */
+body:not(.world-lifesteal):not(.world-economy){
+  background:#72b8eb!important;
+  background-image:linear-gradient(to bottom,#d9f2ff 0%,#b6e4ff 22%,#86c8f3 55%,#529bd7 100%)!important;
+  background-attachment:fixed!important;
+}
+/* No falling particles or cloud decorations on any theme. */
+.cloud,.particle,#particles{display:none!important;animation:none!important;}
+body:not(.world-lifesteal):not(.world-economy) .sky{background:none!important;}
+body:not(.world-lifesteal):not(.world-economy) .sun{display:none!important;}
