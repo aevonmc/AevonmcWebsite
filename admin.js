@@ -12,7 +12,7 @@ function filePath(){return '/repos/'+auth.repo+'/contents/posts.json?ref='+encod
 async function reload(){const data=await github('GET',filePath());if(data.type!=='file'||!data.content||!data.sha)throw Error('posts.json is missing or not a file');const parsed=JSON.parse(base64ToUtf8(data.content));if(!Array.isArray(parsed))throw Error('posts.json must contain an array');posts=parsed;sha=data.sha;render();status('Content loaded from GitHub.','ok')}
 async function commit(message){if(busy)return;busy=true;$('save').disabled=true;try{const body={message,content:utf8ToBase64(JSON.stringify(posts,null,2)+'\n'),sha,branch:auth.branch};const data=await github('PUT','/repos/'+auth.repo+'/contents/posts.json',body);if(!data.content?.sha)throw Error('GitHub did not confirm the file update');sha=data.content.sha;status('Published to GitHub. GitHub Pages will update shortly.','ok');$('editor').hidden=true;render()}catch(e){status('Save failed: '+errorMessage(e)+'. If HTTP 403, check token Contents write permission. If HTTP 409, refresh before retrying.','error');throw e}finally{busy=false;$('save').disabled=false}}
 function render(){const query=$('filter').value.toLowerCase(),cat=$('category-filter').value;const list=$('post-list');list.replaceChildren();const items=posts.map((p,i)=>({p,i})).filter(({p})=>(!cat||p.category===cat)&&[p.title,p.description,p.content].join(' ').toLowerCase().includes(query));if(!items.length){list.textContent='No posts found.';return}for(const {p,i} of items){const row=document.createElement('div');row.className='post-row';row.innerHTML='<div><strong>'+escapeHtml(p.title)+'</strong><small>'+escapeHtml(p.category)+' · '+(p.published?'Published':'Draft')+' · /'+escapeHtml(p.slug)+'</small></div><div class="post-actions"><button type="button" data-edit="'+i+'">Edit</button><button type="button" class="danger" data-delete="'+i+'">Delete</button></div>';list.append(row)}}
-function edit(i){editing=i;const p=i<0?{title:'',slug:'',category:'rules',description:'',content:'',published:true}:posts[i];$('editor-title').textContent=i<0?'Create new post':'Edit post';for(const key of ['title','slug','category','description','content'])$(key).value=p[key]||'';$('editor').hidden=false;$('editor').scrollIntoView({behavior:'smooth',block:'start'})}
+function edit(i){editing=i;const p=i<0?{title:'',slug:'',category:'rules',description:'',content:'',published:true}:posts[i];$('editor-title').textContent=i<0?'Create new post':'Edit post';$('save').textContent=i<0?'Publish':'Apply Changes';for(const key of ['title','slug','category','description','content'])$(key).value=p[key]||'';$('editor').hidden=false;$('editor').scrollIntoView({behavior:'smooth',block:'start'})}
 function slugify(s){return s.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,100)}
 $('title').addEventListener('input',()=>{if(editing===-1&&(!$('slug').value||$('slug').dataset.auto==='yes')){$('slug').value=slugify($('title').value);$('slug').dataset.auto='yes'}});
 $('slug').addEventListener('input',()=>{$('slug').dataset.auto='no'});
@@ -22,8 +22,62 @@ $('new-post').addEventListener('click',()=>{$('slug').dataset.auto='yes';edit(-1
 $('cancel').addEventListener('click',()=>{$('editor').hidden=true});
 $('refresh').addEventListener('click',async()=>{if(!confirm('Discard any unsaved edits and reload from GitHub?'))return;try{await reload();$('editor').hidden=true}catch(e){status(errorMessage(e),'error')}});
 $('filter').addEventListener('input',render);$('category-filter').addEventListener('change',render);
-$('post-list').addEventListener('click',async e=>{const button=e.target.closest('button');if(!button||busy)return;if(button.dataset.edit!==undefined){edit(Number(button.dataset.edit));return}if(button.dataset.delete!==undefined){const i=Number(button.dataset.delete),p=posts[i];if(!confirm('Permanently delete "'+p.title+'"?'))return;const previous=posts.slice();posts.splice(i,1);try{await commit('Delete '+p.category+' post: '+p.title)}catch{posts=previous;render()}}});
-$('post-form').addEventListener('submit',async e=>{e.preventDefault();if(busy)return;const post={title:$('title').value.trim(),slug:$('slug').value.trim(),category:$('category').value,description:$('description').value.trim(),published:true,content:$('content').value};if(!post.title||!post.content.trim()||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(post.slug)){status('Check title, slug and content.','error');return}if(posts.some((p,i)=>i!==editing&&p.category===post.category&&p.slug===post.slug)){status('That URL slug already exists in this category.','error');return}const previous=posts.slice();if(editing<0)posts.push(post);else posts[editing]=post;try{await commit((editing<0?'Publish ':'Update ')+post.category+' post: '+post.title);const publicUrl=new URL('index.html#/'+post.category+'/'+encodeURIComponent(post.slug),location.href).href;status('Published successfully to '+post.category.toUpperCase()+'. GitHub Pages may take a few minutes to update. Open: '+publicUrl,'ok')}catch{posts=previous;render()}});
+// Always base mutations on the latest GitHub version, never on an old tab's cached array.
+async function latestPosts(){
+ const data=await github('GET',filePath());
+ if(data.type!=='file'||!data.sha||!data.content)throw Error('Could not load current posts.json');
+ const current=JSON.parse(base64ToUtf8(data.content));
+ if(!Array.isArray(current))throw Error('Invalid posts.json');
+ return {current,remoteSha:data.sha};
+}
+async function applyMutation(change,message){
+ if(busy)return false;
+ busy=true;$('save').disabled=true;
+ document.querySelectorAll('[data-delete]').forEach(b=>b.disabled=true);
+ try{
+  const {current,remoteSha}=await latestPosts();
+  const result=change(current);
+  if(result===false)return false;
+  const data=await github('PUT','/repos/'+auth.repo+'/contents/posts.json',{
+   message,content:utf8ToBase64(JSON.stringify(current,null,2)+'\n'),sha:remoteSha,branch:auth.branch
+  });
+  if(!data.content?.sha)throw Error('GitHub did not confirm the update');
+  // Verify that the committed file actually contains the requested mutation.
+  const check=await latestPosts();
+  if(check.remoteSha!==data.content.sha)throw Error('Another update occurred immediately after saving. Refresh and verify.');
+  posts=check.current;sha=check.remoteSha;render();$('editor').hidden=true;
+  status('Changes applied on GitHub. The public site updates after GitHub Pages deploys (usually within a few minutes).','ok');
+  return true;
+ }catch(err){status('Changes NOT applied: '+errorMessage(err)+'. Please retry or refresh.','error');return false}
+ finally{busy=false;$('save').disabled=false;document.querySelectorAll('[data-delete]').forEach(b=>b.disabled=false)}
+}
+$('post-list').addEventListener('click',async e=>{
+ const button=e.target.closest('button');if(!button||busy)return;
+ if(button.dataset.edit!==undefined){edit(Number(button.dataset.edit));return}
+ if(button.dataset.delete!==undefined){
+  const p=posts[Number(button.dataset.delete)];
+  if(!confirm('Permanently delete "'+p.title+'" from '+p.category+'?'))return;
+  const ok=await applyMutation(current=>{
+   const i=current.findIndex(x=>x.category===p.category&&x.slug===p.slug);
+   if(i<0)throw Error('Post already removed or changed. Refresh.');
+   current.splice(i,1);
+  },'Delete '+p.category+' post: '+p.title);
+  if(ok)status('Deleted "'+p.title+'" from GitHub. It will disappear from the public page after deployment.','ok');
+ }
+});
+$('post-form').addEventListener('submit',async e=>{
+ e.preventDefault();if(busy)return;
+ const post={title:$('title').value.trim(),slug:$('slug').value.trim(),category:$('category').value,description:$('description').value.trim(),published:true,content:$('content').value};
+ if(!post.title||!post.content.trim()||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(post.slug)){status('Check title, slug and content.','error');return}
+ const original=editing<0?null:{category:posts[editing].category,slug:posts[editing].slug};
+ const ok=await applyMutation(current=>{
+  const index=original?current.findIndex(p=>p.category===original.category&&p.slug===original.slug):-1;
+  if(original&&index<0)throw Error('Original post was changed or removed. Refresh before editing.');
+  if(current.some((p,i)=>i!==index&&p.category===post.category&&p.slug===post.slug))throw Error('That URL slug already exists in this category.');
+  if(index<0)current.push(post);else current[index]={...current[index],...post};
+ },(original?'Apply changes to ':'Publish ')+post.category+' post: '+post.title);
+ if(ok){const url=new URL('index.html#/'+post.category+'/'+encodeURIComponent(post.slug),location.href).href;status('Changes saved and verified on GitHub. Public page (after deployment): '+url,'ok')}
+});
 // Repository and owner are deliberately fixed to the verified GitHub account.
 
 // Formatting tools insert safe Markdown or the supported color notation.
